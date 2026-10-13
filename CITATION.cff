@@ -1,0 +1,31 @@
+cff-version: 1.2.0
+message: "If you use this code, please cite the paper."
+title: "NTAR: Normalized Threat-Adaptive Routing for SDN (simulation code)"
+authors:
+  - family-names: Obeidat
+    given-names: Atef Ahmed
+    affiliation: "Al-Balqa Applied University"
+  - family-names: Al-Qablan
+    given-names: Tamara Amjad
+    affiliation: "Al-Balqa Applied University"
+  - family-names: Thuneibat
+    given-names: Saed
+    affiliation: "Al-Balqa Applied University"
+  - family-names: Alkoffash
+    given-names: Mahmud S.
+    affiliation: "Al-Balqa Applied University"
+license: MIT
+preferred-citation:
+  type: article
+  title: "NTAR: A Normalized Threat-Adaptive Routing Framework for Energy-Security Trade-offs in SDN"
+  authors:
+    - family-names: Obeidat
+      given-names: Atef Ahmed
+    - family-names: Al-Qablan
+      given-names: Tamara Amjad
+    - family-names: Thuneibat
+      given-names: Saed
+    - family-names: Alkoffash
+      given-names: Mahmud S.
+  year: 2026
+  notes: "Manuscript under review."

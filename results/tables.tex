@@ -1,0 +1,168 @@
+% ---------------- TABLE 1 ----------------
+\begin{table}[!t]
+\caption{Per-phase breakdown of the representative NTAR run (seed 0). Entropy values are cumulative at the end of each phase.}
+\label{tab:phase}
+\centering
+\footnotesize
+\resizebox{\columnwidth}{!}{\begin{tabular}{lccccc}
+\toprule
+Phase (steps) & Energy (J) & Latency (ms) & $H_{avail}$ & Reward & Distinct paths \\
+\midrule
+Normal I (1--7) & 0.1204 & 23.58 & 0.266 & 0.0254 & 2 / 7 \\
+Fault \& Recovery (8--14) & 0.1470 & 29.53 & 0.575 & -0.0081 & 6 / 7 \\
+Threat Escalation (15--19) & 0.2105 & 40.93 & 0.814 & 0.3875 & 5 / 5 \\
+Normal II (20--25) & 0.1199 & 22.24 & 0.736 & 0.0273 & 2 / 6 \\
+\bottomrule
+\end{tabular}}
+\end{table}
+
+% ---------------- TABLE 2 ----------------
+\begin{table*}[!t]
+\caption{Comparative performance on the six-node topology (mean $\pm$ std over $N=20$ runs, 25 steps). Entropy columns are per-step averages: $H_{avail}$ is normalized by the 13 available paths (Eq.~(\ref{eq:havail})) and $H_{obs}$ is Eq.~(\ref{eq2}). The hit rate is that of the frequency-based observer over the five threat-window steps; Section~\ref{sec:results}-\ref{sec:adv} evaluates stronger adversaries.}
+\label{tab:bench}
+\centering
+\footnotesize
+\resizebox{\textwidth}{!}{\begin{tabular}{lccccccc}
+\toprule
+Method & Energy (J) & Latency (ms) & $H_{avail}$ & $H_{obs}$ & Reward & Unique paths & Freq.\ hit rate (threat) \\
+\midrule
+Static Shortest-Path & 0.1195 $\pm$ 0.0011 & 22.97 $\pm$ 0.23 & 0.000 $\pm$ 0.000 & 0.000 $\pm$ 0.000 & -0.1256 $\pm$ 0.0009 & 1.0 $\pm$ 0.0 & 1.00 $\pm$ 0.00 \\
+Random Path Selection & 0.1813 $\pm$ 0.0094 & 35.33 $\pm$ 1.79 & 0.694 $\pm$ 0.040 & 0.912 $\pm$ 0.020 & 0.0663 $\pm$ 0.0097 & 11.1 $\pm$ 1.2 & 0.07 $\pm$ 0.11 \\
+Fixed-Weight (ablation) & 0.1295 $\pm$ 0.0011 & 24.97 $\pm$ 0.23 & 0.441 $\pm$ 0.000 & 0.809 $\pm$ 0.000 & 0.0897 $\pm$ 0.0009 & 7.0 $\pm$ 0.0 & 0.20 $\pm$ 0.00 \\
+NTAR (deterministic) & 0.1455 $\pm$ 0.0011 & 28.17 $\pm$ 0.23 & 0.515 $\pm$ 0.000 & 0.839 $\pm$ 0.000 & 0.0900 $\pm$ 0.0009 & 11.0 $\pm$ 0.0 & 0.00 $\pm$ 0.00 \\
+\bottomrule
+\end{tabular}}
+\end{table*}
+
+% ---------------- TABLE 3 ----------------
+\begin{table*}[!t]
+\caption{Cost-form ablation. Each row changes one ingredient of the cost function and compares the threat-adaptive controller with its fixed-weight twin. Columns 2--4: six-node topology (seed 0); ``steps differing'' counts steps at which the two controllers select different paths. Columns 5--6: 30 random topologies of 10--20 nodes, with nominal energy averaged over the threat-free steps of the fixed-weight run.}
+\label{tab:costform}
+\centering
+\footnotesize
+\resizebox{\textwidth}{!}{\begin{tabular}{lccccc}
+\toprule
+ & \multicolumn{3}{c}{Six-node topology} & \multicolumn{2}{c}{30 random topologies} \\
+\cmidrule(lr){2-4}\cmidrule(lr){5-6}
+Cost form & Steps differing & Unique paths (fixed / adapt.) & Energy, fixed (J) & Topologies differing & Nominal energy (J) \\
+\midrule
+Original cost, Eq.~(\ref{eq3}) (with $R(p)$) & 0 / 25 & 13 / 13 & 0.1837 & 0 / 30 & 0.2047 \\
+Normalized, with $R(p)$ & 0 / 25 & 13 / 13 & 0.1837 & 0 / 30 & 0.2047 \\
+Unnormalized, without $R(p)$ & 4 / 25 & 13 / 13 & 0.1637 & 21 / 30 & 0.1946 \\
+NTAR cost, Eq.~(\ref{eq5}) & 5 / 25 & 7 / 11 & 0.1297 & 27 / 30 & 0.1809 \\
+\bottomrule
+\end{tabular}}
+\end{table*}
+
+% ---------------- TABLE 4 ----------------
+\begin{table*}[!t]
+\caption{Generalization to random topologies, original 25-step protocol. Each topology is averaged over 5 seeds; values are means $\pm$ 95\% confidence half-widths across the 10 topologies of each size, which are the independent samples. The last two columns give Wilcoxon signed-rank $p$-values for the paired NTAR$-$Fixed differences in energy and in the frequency-observer hit rate.}
+\label{tab:gen}
+\centering
+\footnotesize
+\resizebox{\textwidth}{!}{\begin{tabular}{cc ccc cc cc}
+\toprule
+ & & \multicolumn{3}{c}{Energy (J)} & \multicolumn{2}{c}{Freq.\ hit rate (threat)} & \multicolumn{2}{c}{Paired $p$, NTAR vs.\ Fixed} \\
+\cmidrule(lr){3-5}\cmidrule(lr){6-7}\cmidrule(lr){8-9}
+$|V|$ & Paths & Random & Fixed & NTAR & Fixed & NTAR & Energy & Hit rate \\
+\midrule
+10 & 10.3 & 0.205 $\pm$ 0.004 & 0.179 $\pm$ 0.003 & 0.183 $\pm$ 0.004 & 0.16 $\pm$ 0.23 & 0.00 $\pm$ 0.00 & 0.016 & 0.250 \\
+15 & 12.4 & 0.209 $\pm$ 0.003 & 0.182 $\pm$ 0.005 & 0.186 $\pm$ 0.004 & 0.12 $\pm$ 0.23 & 0.00 $\pm$ 0.00 & 0.031 & 0.500 \\
+20 & 12.9 & 0.211 $\pm$ 0.003 & 0.184 $\pm$ 0.007 & 0.191 $\pm$ 0.005 & 0.42 $\pm$ 0.33 & 0.00 $\pm$ 0.00 & 0.016 & 0.031 \\
+\bottomrule
+\end{tabular}}
+\end{table*}
+
+% ---------------- TABLE 5 ----------------
+\begin{table*}[!t]
+\caption{Hit rates of three adversaries over a 10-step threat window (steps 15--24 of 40) on the 30 random topologies (mean $\pm$ 95\% CI across topologies; 5 seeds per topology). Top-1 is the probability that the adversary's single guess is the selected path; top-3 that the selected path is among its three guesses. Policy-aware hit rates are Bayes-optimal expected values given the policy, its state and the weights in use.}
+\label{tab:adv}
+\centering
+\footnotesize
+\resizebox{\textwidth}{!}{\begin{tabular}{lccccccc}
+\toprule
+ & & \multicolumn{2}{c}{Frequency} & \multicolumn{2}{c}{Markov} & \multicolumn{2}{c}{Policy-aware} \\
+\cmidrule(lr){3-4}\cmidrule(lr){5-6}\cmidrule(lr){7-8}
+Method & Energy (J) & Top-1 & Top-3 & Top-1 & Top-3 & Top-1 & Top-3 \\
+\midrule
+Static Shortest-Path & 0.151 $\pm$ 0.001 & 0.92 $\pm$ 0.03 & 1.00 $\pm$ 0.00 & 1.00 $\pm$ 0.00 & 1.00 $\pm$ 0.00 & 1.00 $\pm$ 0.00 & 1.00 $\pm$ 0.00 \\
+Random Path Selection & 0.187 $\pm$ 0.002 & 0.10 $\pm$ 0.02 & 0.30 $\pm$ 0.06 & 0.09 $\pm$ 0.02 & 0.30 $\pm$ 0.06 & 0.11 $\pm$ 0.02 & 0.32 $\pm$ 0.06 \\
+Periodic MTD, $M=1$ & 0.187 $\pm$ 0.002 & 0.09 $\pm$ 0.02 & 0.28 $\pm$ 0.06 & 0.11 $\pm$ 0.02 & 0.32 $\pm$ 0.07 & 0.12 $\pm$ 0.03 & 0.37 $\pm$ 0.08 \\
+Periodic MTD, $M=3$ & 0.188 $\pm$ 0.002 & 0.16 $\pm$ 0.02 & 0.40 $\pm$ 0.05 & 0.53 $\pm$ 0.01 & 0.61 $\pm$ 0.03 & 0.74 $\pm$ 0.01 & 0.81 $\pm$ 0.02 \\
+Fixed-Weight & 0.161 $\pm$ 0.002 & 0.24 $\pm$ 0.15 & 0.53 $\pm$ 0.13 & 0.66 $\pm$ 0.12 & 0.71 $\pm$ 0.11 & 1.00 $\pm$ 0.00 & 1.00 $\pm$ 0.00 \\
+NTAR (deterministic) & 0.166 $\pm$ 0.001 & 0.02 $\pm$ 0.03 & 0.13 $\pm$ 0.06 & 0.30 $\pm$ 0.10 & 0.38 $\pm$ 0.13 & 1.00 $\pm$ 0.00 & 1.00 $\pm$ 0.00 \\
+NTAR-R ($\tau=0.1$) & 0.171 $\pm$ 0.002 & 0.04 $\pm$ 0.02 & 0.18 $\pm$ 0.06 & 0.07 $\pm$ 0.02 & 0.20 $\pm$ 0.07 & 0.25 $\pm$ 0.02 & 0.58 $\pm$ 0.05 \\
+\bottomrule
+\end{tabular}}
+\end{table*}
+
+% ---------------- TABLE 6 ----------------
+\begin{table*}[!t]
+\caption{Sensitivity to an imperfect threat signal (30 random topologies, 10-step threat window, means across topologies). Nominal energy is measured on steps without a true threat, so it includes the cost of false alarms; hit rates are measured on the true threat window. The policy-aware hit rate of deterministic NTAR is 1.00 in every scenario.}
+\label{tab:signal}
+\centering
+\footnotesize
+\resizebox{\textwidth}{!}{\begin{tabular}{lccccccc}
+\toprule
+ & \multicolumn{3}{c}{NTAR (deterministic)} & \multicolumn{4}{c}{NTAR-R ($\tau=0.1$)} \\
+\cmidrule(lr){2-4}\cmidrule(lr){5-8}
+Threat signal & Nominal energy (J) & Freq.\ top-1 & Markov top-1 & Nominal energy (J) & Freq.\ top-1 & Markov top-1 & Policy-aware top-1 \\
+\midrule
+Perfect detection & 0.156 & 0.02 & 0.30 & 0.164 & 0.04 & 0.07 & 0.25 \\
+False alarms, $p_{fa}=0.1$ & 0.160 & 0.03 & 0.26 & 0.166 & 0.04 & 0.06 & 0.24 \\
+False alarms, $p_{fa}=0.3$ & 0.166 & 0.04 & 0.25 & 0.171 & 0.05 & 0.07 & 0.23 \\
+Missed detection, $p_{m}=0.3$ & 0.157 & 0.08 & 0.23 & 0.165 & 0.12 & 0.11 & 0.27 \\
+Missed detection, $p_{m}=0.6$ & 0.159 & 0.15 & 0.39 & 0.166 & 0.20 & 0.18 & 0.29 \\
+Detection delay, 2 steps & 0.159 & 0.05 & 0.37 & 0.166 & 0.07 & 0.09 & 0.25 \\
+Detection delay, 5 steps & 0.163 & 0.12 & 0.48 & 0.169 & 0.13 & 0.12 & 0.26 \\
+Flapping signal, $p_{f}=0.1$ & 0.161 & 0.05 & 0.21 & 0.167 & 0.07 & 0.08 & 0.26 \\
+\midrule
+Fixed-Weight (reference) & 0.160 & 0.24 & 0.66 & & & & \\
+\bottomrule
+\end{tabular}}
+\end{table*}
+
+% ---------------- TABLE 7 ----------------
+\begin{table*}[!t]
+\caption{Decoupled energy and latency (30 random topologies, 10-step threat window, 3 link-cost draws per topology; mean $\pm$ 95\% CI across topologies). Independent: per-link energy $\sim U(0.02,0.08)$~J and latency $\sim U(4,16)$~ms drawn independently. Anti-correlated: latency $=20-200\,e+\mathcal{N}(0,0.5)$~ms, so low-energy links are slow.}
+\label{tab:decoupled}
+\centering
+\footnotesize
+\resizebox{\textwidth}{!}{\begin{tabular}{llccccc}
+\toprule
+Cost model & Method & Energy (J) & Latency (ms) & Freq.\ top-1 & Markov top-1 & Policy-aware top-1 \\
+\midrule
+Independent & Random & 0.184 $\pm$ 0.007 & 36.4 $\pm$ 1.3 & 0.10 $\pm$ 0.02 & 0.11 $\pm$ 0.03 & 0.11 $\pm$ 0.02 \\
+ & Fixed-Weight & 0.146 $\pm$ 0.007 & 26.8 $\pm$ 1.8 & 0.77 $\pm$ 0.10 & 0.75 $\pm$ 0.11 & 1.00 $\pm$ 0.00 \\
+ & NTAR & 0.158 $\pm$ 0.007 & 29.8 $\pm$ 1.6 & 0.02 $\pm$ 0.03 & 0.17 $\pm$ 0.06 & 1.00 $\pm$ 0.00 \\
+ & NTAR-R & 0.164 $\pm$ 0.007 & 32.0 $\pm$ 1.5 & 0.06 $\pm$ 0.04 & 0.07 $\pm$ 0.03 & 0.30 $\pm$ 0.03 \\
+\midrule
+Anti-correlated & Random & 0.184 $\pm$ 0.007 & 38.2 $\pm$ 1.4 & 0.10 $\pm$ 0.02 & 0.11 $\pm$ 0.03 & 0.11 $\pm$ 0.02 \\
+ & Fixed-Weight & 0.157 $\pm$ 0.009 & 32.4 $\pm$ 1.9 & 0.46 $\pm$ 0.12 & 0.50 $\pm$ 0.10 & 1.00 $\pm$ 0.00 \\
+ & NTAR & 0.164 $\pm$ 0.008 & 33.6 $\pm$ 1.8 & 0.02 $\pm$ 0.03 & 0.18 $\pm$ 0.07 & 1.00 $\pm$ 0.00 \\
+ & NTAR-R & 0.168 $\pm$ 0.007 & 34.7 $\pm$ 1.6 & 0.05 $\pm$ 0.02 & 0.08 $\pm$ 0.03 & 0.27 $\pm$ 0.03 \\
+\bottomrule
+\end{tabular}}
+\end{table*}
+
+% ---------------- TABLE 8 ----------------
+\begin{table}[!t]
+\caption{Per-decision cost of the candidate search (Python/NetworkX, one CPU core; 5 graphs per row, source and destination three hops apart, mean $\pm$ 95\% CI). Enumeration lists all simple paths of at most four hops; Yen lists the 16 shortest simple paths.}
+\label{tab:scale}
+\centering
+\footnotesize
+\resizebox{\columnwidth}{!}{\begin{tabular}{ccccc}
+\toprule
+$|V|$ & Mean degree & Candidates & Enumeration (ms) & Yen, $k=16$ (ms) \\
+\midrule
+20 & 3.6 & 16.0 $\pm$ 16.2 & 0.39 $\pm$ 0.25 & 0.53 $\pm$ 0.16 \\
+20 & 6.0 & 55.0 $\pm$ 29.0 & 0.97 $\pm$ 0.57 & 0.46 $\pm$ 0.10 \\
+50 & 3.6 & 9.8 $\pm$ 9.3 & 0.54 $\pm$ 0.51 & 0.85 $\pm$ 0.34 \\
+50 & 6.0 & 24.2 $\pm$ 8.3 & 1.54 $\pm$ 0.51 & 0.68 $\pm$ 0.09 \\
+100 & 3.6 & 3.8 $\pm$ 2.4 & 0.52 $\pm$ 0.37 & 1.35 $\pm$ 0.27 \\
+100 & 6.0 & 15.0 $\pm$ 11.0 & 1.87 $\pm$ 0.92 & 0.97 $\pm$ 0.20 \\
+200 & 3.6 & 2.6 $\pm$ 1.4 & 0.32 $\pm$ 0.15 & 1.51 $\pm$ 0.40 \\
+200 & 6.0 & 9.0 $\pm$ 5.9 & 1.30 $\pm$ 0.59 & 0.83 $\pm$ 0.16 \\
+\bottomrule
+\end{tabular}}
+\end{table}
