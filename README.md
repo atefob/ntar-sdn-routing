@@ -11,7 +11,7 @@ This repository reproduces every table and figure in the paper from a single com
 ## Quick start
 
 ```bash
-git clone https://github.com/<user>/ntar-sdn-routing.git
+git clone https://github.com/atefob/ntar-sdn-routing.git
 cd ntar-sdn-routing
 pip install -r requirements.txt
 bash run_all.sh
