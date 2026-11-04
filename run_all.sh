@@ -4,6 +4,7 @@ set -euo pipefail
 cd "$(dirname "$0")"
 python ntar_sim.py --out results --check
 python experiments2.py --out results
+python experiments3.py --out results
 python make_tables.py
 python make_figures.py
 echo "Done: results/ and figures/ are up to date."

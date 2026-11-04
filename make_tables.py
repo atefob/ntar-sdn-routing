@@ -200,5 +200,24 @@ table(8, "table",
       r"$|V|$ & Mean degree & Candidates & Enumeration (ms) & Yen, $k=16$ (ms) \\",
       rows, width="\\columnwidth")
 
+# ---------------------------------------------------------------- Table 9: truncated candidate sets
+R3 = json.load(open("results/results3.json"))
+GEN = [("full_enum", "All paths $\\le$4 hops, DFS order"), ("full_yen", "All paths $\\le$4 hops, Yen order"),
+       ("yen16", "Yen, $k=16$"), ("yen8", "Yen, $k=8$")]
+rows = []
+for k, nm in GEN:
+    a = R3[k]
+    rows.append(f"{nm} & {R3[k + '_truncated_topologies']} & {a['ntar_r0.1']['energy'][0]:.3f} & {a['random']['energy'][0]:.3f} & "
+                f"{a['ntar']['m1'][0]:.2f} & {a['ntar_r0.1']['m1'][0]:.2f} & {a['random']['m1'][0]:.2f} & "
+                f"{a['ntar_r0.1']['pa1'][0]:.2f} & {a['random']['pa1'][0]:.2f} \\\\")
+table(9, "table*",
+      r"Effect of the candidate generator (30 random topologies, 10-step threat window, means across topologies). "
+      r"``Truncated'' counts topologies in which the generator returns fewer paths than the full four-hop set; the full set has 4--25 paths per topology.",
+      "tab:yen", "lcccccccc",
+      r" & & \multicolumn{2}{c}{Energy (J)} & \multicolumn{3}{c}{Markov top-1} & \multicolumn{2}{c}{Policy-aware top-1} \\" "\n"
+      r"\cmidrule(lr){3-4}\cmidrule(lr){5-7}\cmidrule(lr){8-9}" "\n"
+      r"Candidate generator & Truncated & NTAR-R & Random & NTAR & NTAR-R & Random & NTAR-R & Random \\",
+      rows)
+
 open("results/tables.tex", "w").write("\n".join(out))
 print("wrote", len(out), "tables")

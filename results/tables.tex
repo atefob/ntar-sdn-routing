@@ -166,3 +166,23 @@ $|V|$ & Mean degree & Candidates & Enumeration (ms) & Yen, $k=16$ (ms) \\
 \bottomrule
 \end{tabular}}
 \end{table}
+
+% ---------------- TABLE 9 ----------------
+\begin{table*}[!t]
+\caption{Effect of the candidate generator (30 random topologies, 10-step threat window, means across topologies). ``Truncated'' counts topologies in which the generator returns fewer paths than the full four-hop set; the full set has 4--25 paths per topology.}
+\label{tab:yen}
+\centering
+\footnotesize
+\resizebox{\textwidth}{!}{\begin{tabular}{lcccccccc}
+\toprule
+ & & \multicolumn{2}{c}{Energy (J)} & \multicolumn{3}{c}{Markov top-1} & \multicolumn{2}{c}{Policy-aware top-1} \\
+\cmidrule(lr){3-4}\cmidrule(lr){5-7}\cmidrule(lr){8-9}
+Candidate generator & Truncated & NTAR-R & Random & NTAR & NTAR-R & Random & NTAR-R & Random \\
+\midrule
+All paths $\le$4 hops, DFS order & 0 & 0.171 & 0.187 & 0.30 & 0.07 & 0.09 & 0.25 & 0.11 \\
+All paths $\le$4 hops, Yen order & 0 & 0.171 & 0.188 & 0.26 & 0.07 & 0.11 & 0.25 & 0.11 \\
+Yen, $k=16$ & 7 & 0.170 & 0.188 & 0.26 & 0.07 & 0.11 & 0.26 & 0.11 \\
+Yen, $k=8$ & 17 & 0.166 & 0.183 & 0.41 & 0.10 & 0.14 & 0.25 & 0.14 \\
+\bottomrule
+\end{tabular}}
+\end{table*}

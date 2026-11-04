@@ -21,8 +21,9 @@ bash run_all.sh
 
 - `results/results.json`: main experiments (Tables 1–4).
 - `results/results2.json`: extended experiments (Tables 5–8).
-- `results/tables.tex`: all eight tables as LaTeX, generated from the JSON files.
-- `figures/`: Figs. 2–4 as PDF and PNG.
+- `results/results3.json`: candidate-generator experiment (Table 9).
+- `results/tables.tex`: all nine tables as LaTeX, generated from the JSON files.
+- `figures/`: Figs. 2–4 as PDF and PNG. Fig. 1 (architecture) is drawn in TikZ: `figures/fig1_architecture.tex`.
 
 ## Repository layout
 
@@ -30,6 +31,7 @@ bash run_all.sh
 |---|---|
 | `ntar_sim.py` | Main simulator. Its routing engine reproduces the original baseline script step for step. It generates the representative run, the benchmark, the cost-form ablation, the threat-weight sweep and the generalization study. Use `--check` to verify the benchmark against the published Table 2. |
 | `experiments2.py` | Extended experiments: NTAR-R, frequency/Markov/policy-aware adversaries, periodic MTD baselines, imperfect threat signals, decoupled energy/latency costs, computational scaling, topology-level statistics, and the Proposition 1 counterexample. |
+| `experiments3.py` | Candidate-generator experiment: full four-hop enumeration vs. Yen's algorithm with k = 16 and k = 8. |
 | `make_tables.py` | Builds `results/tables.tex` from the JSON results, so no number is transcribed by hand. |
 | `make_figures.py` | Builds Figs. 2–4 from the JSON results. |
 | `original/code_com_baseline.py` | The authors' original baseline script, kept for reference. |
@@ -55,6 +57,7 @@ where *rep(p)* is how often *p* was used before. The weights are (0.4, 0.4, 0.2)
 ```bash
 python ntar_sim.py --out results --check   # Tables 1-4, verifies Table 2 of the original script
 python experiments2.py --out results       # Tables 5-8
+python experiments3.py --out results       # Table 9
 python make_tables.py                      # results/tables.tex
 python make_figures.py                     # figures/
 ```
