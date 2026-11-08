@@ -221,3 +221,7 @@ table(9, "table*",
 
 open("results/tables.tex", "w").write("\n".join(out))
 print("wrote", len(out), "tables")
+
+# Generate corrected Tables 7, 8, and new Table 10
+from revision_tables import apply_revision_tables
+apply_revision_tables()

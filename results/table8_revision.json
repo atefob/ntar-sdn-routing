@@ -1,0 +1,761 @@
+{
+  "design": {
+    "graph_generator": "Erdos-Renyi G(n, degree/(n-1)); connected graphs",
+    "source_destination": "3-hop shortest path, same selection as experiments2.py",
+    "graph_sizes": [
+      20,
+      50,
+      100,
+      200
+    ],
+    "mean_degrees": [
+      3.6,
+      6.0
+    ],
+    "graphs_per_configuration": 5,
+    "max_candidate_hops_all_methods": 4,
+    "yen_k": 16,
+    "timing_repeats_per_batch": 20,
+    "timing_batches_per_graph": 3,
+    "timing_per_graph": "median of batches, millisecond per decision",
+    "confidence_interval_unit": "independent graph (95% t CI across graph-level medians)",
+    "timed_operations": "candidate generation + NTAR engine path cost and argmin",
+    "not_timed": "graph generation, engine setup, flow-rule installation, network latency",
+    "python": "3.14.0",
+    "networkx": "3.6.1",
+    "numpy": "2.5.4",
+    "git_commit": "e6d27186017945d97e6e4a4b648e94a1e1547afa"
+  },
+  "by_configuration": [
+    {
+      "nodes": 20,
+      "degree": 3.6,
+      "all_candidates": {
+        "mean": 16.0,
+        "ci95_half_width": 16.189317847087032
+      },
+      "yen16_candidates": {
+        "mean": 10.8,
+        "ci95_half_width": 6.475727138834813
+      },
+      "truncated_graphs": 2,
+      "ms_dfs_all": {
+        "mean": 0.7953500002622604,
+        "ci95_half_width": 0.4359335154996682
+      },
+      "ms_yen_all": {
+        "mean": 0.9563520003575832,
+        "ci95_half_width": 0.8978852974374645
+      },
+      "ms_yen16": {
+        "mean": 0.6334930006414652,
+        "ci95_half_width": 0.2779512964248401
+      },
+      "candidate_set_equal_dfs_vs_yen_all": true
+    },
+    {
+      "nodes": 20,
+      "degree": 6.0,
+      "all_candidates": {
+        "mean": 55.0,
+        "ci95_half_width": 28.986937903429357
+      },
+      "yen16_candidates": {
+        "mean": 16.0,
+        "ci95_half_width": 0.0
+      },
+      "truncated_graphs": 5,
+      "ms_dfs_all": {
+        "mean": 2.6126519998069853,
+        "ci95_half_width": 1.3935699586931096
+      },
+      "ms_yen_all": {
+        "mean": 4.990258999168873,
+        "ci95_half_width": 3.8994256089536505
+      },
+      "ms_yen16": {
+        "mean": 0.9880489995703101,
+        "ci95_half_width": 0.2812248591272624
+      },
+      "candidate_set_equal_dfs_vs_yen_all": true
+    },
+    {
+      "nodes": 50,
+      "degree": 3.6,
+      "all_candidates": {
+        "mean": 9.8,
+        "ci95_half_width": 9.349655703152107
+      },
+      "yen16_candidates": {
+        "mean": 9.0,
+        "ci95_half_width": 7.998860769138773
+      },
+      "truncated_graphs": 2,
+      "ms_dfs_all": {
+        "mean": 1.117683001793921,
+        "ci95_half_width": 0.9657971296251181
+      },
+      "ms_yen_all": {
+        "mean": 1.0294170014094561,
+        "ci95_half_width": 1.2097693011552793
+      },
+      "ms_yen16": {
+        "mean": 0.7760059996508062,
+        "ci95_half_width": 0.7735453757781582
+      },
+      "candidate_set_equal_dfs_vs_yen_all": true
+    },
+    {
+      "nodes": 50,
+      "degree": 6.0,
+      "all_candidates": {
+        "mean": 24.2,
+        "ci95_half_width": 8.301524435563657
+      },
+      "yen16_candidates": {
+        "mean": 16.0,
+        "ci95_half_width": 0.0
+      },
+      "truncated_graphs": 5,
+      "ms_dfs_all": {
+        "mean": 2.5581889995373785,
+        "ci95_half_width": 1.38878195729032
+      },
+      "ms_yen_all": {
+        "mean": 2.151861999882385,
+        "ci95_half_width": 0.5993753761205278
+      },
+      "ms_yen16": {
+        "mean": 1.3533629989251494,
+        "ci95_half_width": 0.4172783552064701
+      },
+      "candidate_set_equal_dfs_vs_yen_all": true
+    },
+    {
+      "nodes": 100,
+      "degree": 3.6,
+      "all_candidates": {
+        "mean": 3.8,
+        "ci95_half_width": 2.3883883880999806
+      },
+      "yen16_candidates": {
+        "mean": 3.8,
+        "ci95_half_width": 2.3883883880999806
+      },
+      "truncated_graphs": 0,
+      "ms_dfs_all": {
+        "mean": 0.8258930000010878,
+        "ci95_half_width": 0.6162732846244726
+      },
+      "ms_yen_all": {
+        "mean": 0.3423140000086278,
+        "ci95_half_width": 0.1924027214570702
+      },
+      "ms_yen16": {
+        "mean": 0.33830700209364295,
+        "ci95_half_width": 0.20133294437696894
+      },
+      "candidate_set_equal_dfs_vs_yen_all": true
+    },
+    {
+      "nodes": 100,
+      "degree": 6.0,
+      "all_candidates": {
+        "mean": 15.0,
+        "ci95_half_width": 11.001171052582334
+      },
+      "yen16_candidates": {
+        "mean": 11.6,
+        "ci95_half_width": 5.454849131699464
+      },
+      "truncated_graphs": 2,
+      "ms_dfs_all": {
+        "mean": 3.5592590004671365,
+        "ci95_half_width": 1.3994635014652301
+      },
+      "ms_yen_all": {
+        "mean": 1.4532829995732754,
+        "ci95_half_width": 0.7716245488018154
+      },
+      "ms_yen16": {
+        "mean": 1.135972999036312,
+        "ci95_half_width": 0.4746454654692871
+      },
+      "candidate_set_equal_dfs_vs_yen_all": true
+    },
+    {
+      "nodes": 200,
+      "degree": 3.6,
+      "all_candidates": {
+        "mean": 2.6,
+        "ci95_half_width": 1.415714776982272
+      },
+      "yen16_candidates": {
+        "mean": 2.6,
+        "ci95_half_width": 1.415714776982272
+      },
+      "truncated_graphs": 0,
+      "ms_dfs_all": {
+        "mean": 0.8832580002490431,
+        "ci95_half_width": 0.5287445732453212
+      },
+      "ms_yen_all": {
+        "mean": 0.33065800089389086,
+        "ci95_half_width": 0.19818407006313687
+      },
+      "ms_yen16": {
+        "mean": 0.2906729991082102,
+        "ci95_half_width": 0.13557503656670575
+      },
+      "candidate_set_equal_dfs_vs_yen_all": true
+    },
+    {
+      "nodes": 200,
+      "degree": 6.0,
+      "all_candidates": {
+        "mean": 9.0,
+        "ci95_half_width": 5.889729484432671
+      },
+      "yen16_candidates": {
+        "mean": 9.0,
+        "ci95_half_width": 5.889729484432671
+      },
+      "truncated_graphs": 0,
+      "ms_dfs_all": {
+        "mean": 4.316186000360176,
+        "ci95_half_width": 2.4378389879672033
+      },
+      "ms_yen_all": {
+        "mean": 1.5440179989673197,
+        "ci95_half_width": 1.350068862723197
+      },
+      "ms_yen16": {
+        "mean": 1.3350600004196167,
+        "ci95_half_width": 1.31489616154868
+      },
+      "candidate_set_equal_dfs_vs_yen_all": true
+    }
+  ],
+  "per_graph": [
+    {
+      "nodes": 20,
+      "degree": 3.6,
+      "topology_seed": 50205,
+      "source": 13,
+      "destination": 4,
+      "all_candidates": 10,
+      "yen16_candidates": 10,
+      "was_truncated": false,
+      "ms_dfs_all": 0.4332499986048788,
+      "ms_yen_all": 0.394099997356534,
+      "ms_yen16": 0.554495002143085
+    },
+    {
+      "nodes": 20,
+      "degree": 3.6,
+      "topology_seed": 50206,
+      "source": 13,
+      "destination": 2,
+      "all_candidates": 8,
+      "yen16_candidates": 8,
+      "was_truncated": false,
+      "ms_dfs_all": 0.4082700004801154,
+      "ms_yen_all": 0.4983849998097867,
+      "ms_yen16": 0.4896150028798729
+    },
+    {
+      "nodes": 20,
+      "degree": 3.6,
+      "topology_seed": 50207,
+      "source": 10,
+      "destination": 15,
+      "all_candidates": 36,
+      "yen16_candidates": 16,
+      "was_truncated": true,
+      "ms_dfs_all": 1.130385004216805,
+      "ms_yen_all": 1.9155300047714263,
+      "ms_yen16": 0.7012350019067526
+    },
+    {
+      "nodes": 20,
+      "degree": 3.6,
+      "topology_seed": 50208,
+      "source": 7,
+      "destination": 11,
+      "all_candidates": 4,
+      "yen16_candidates": 4,
+      "was_truncated": false,
+      "ms_dfs_all": 1.0863800009246916,
+      "ms_yen_all": 0.4194550041574985,
+      "ms_yen16": 0.43098999885842204
+    },
+    {
+      "nodes": 20,
+      "degree": 3.6,
+      "topology_seed": 50210,
+      "source": 3,
+      "destination": 9,
+      "all_candidates": 22,
+      "yen16_candidates": 16,
+      "was_truncated": true,
+      "ms_dfs_all": 0.9184649970848113,
+      "ms_yen_all": 1.5542899956926703,
+      "ms_yen16": 0.9911299974191934
+    },
+    {
+      "nodes": 20,
+      "degree": 6.0,
+      "topology_seed": 50207,
+      "source": 10,
+      "destination": 15,
+      "all_candidates": 84,
+      "yen16_candidates": 16,
+      "was_truncated": true,
+      "ms_dfs_all": 3.7471149989869446,
+      "ms_yen_all": 9.65913999825716,
+      "ms_yen16": 1.0805700032506138
+    },
+    {
+      "nodes": 20,
+      "degree": 6.0,
+      "topology_seed": 50208,
+      "source": 8,
+      "destination": 2,
+      "all_candidates": 70,
+      "yen16_candidates": 16,
+      "was_truncated": true,
+      "ms_dfs_all": 3.270745003828779,
+      "ms_yen_all": 6.393669999670237,
+      "ms_yen16": 1.1248800030443817
+    },
+    {
+      "nodes": 20,
+      "degree": 6.0,
+      "topology_seed": 50209,
+      "source": 4,
+      "destination": 2,
+      "all_candidates": 31,
+      "yen16_candidates": 16,
+      "was_truncated": true,
+      "ms_dfs_all": 1.72074000001885,
+      "ms_yen_all": 2.8712400002405047,
+      "ms_yen16": 1.2356049963273108
+    },
+    {
+      "nodes": 20,
+      "degree": 6.0,
+      "topology_seed": 50210,
+      "source": 19,
+      "destination": 6,
+      "all_candidates": 32,
+      "yen16_candidates": 16,
+      "was_truncated": true,
+      "ms_dfs_all": 1.1333949980325997,
+      "ms_yen_all": 1.713984995149076,
+      "ms_yen16": 0.7114899985026568
+    },
+    {
+      "nodes": 20,
+      "degree": 6.0,
+      "topology_seed": 50211,
+      "source": 10,
+      "destination": 5,
+      "all_candidates": 58,
+      "yen16_candidates": 16,
+      "was_truncated": true,
+      "ms_dfs_all": 3.191264998167753,
+      "ms_yen_all": 4.313260002527386,
+      "ms_yen16": 0.7876999967265874
+    },
+    {
+      "nodes": 50,
+      "degree": 3.6,
+      "topology_seed": 50505,
+      "source": 48,
+      "destination": 24,
+      "all_candidates": 18,
+      "yen16_candidates": 16,
+      "was_truncated": true,
+      "ms_dfs_all": 2.319780003745109,
+      "ms_yen_all": 2.5449150009080768,
+      "ms_yen16": 1.757350005209446
+    },
+    {
+      "nodes": 50,
+      "degree": 3.6,
+      "topology_seed": 50506,
+      "source": 4,
+      "destination": 19,
+      "all_candidates": 5,
+      "yen16_candidates": 5,
+      "was_truncated": false,
+      "ms_dfs_all": 0.3451900032814592,
+      "ms_yen_all": 0.355515000410378,
+      "ms_yen16": 0.39167499635368586
+    },
+    {
+      "nodes": 50,
+      "degree": 3.6,
+      "topology_seed": 50507,
+      "source": 22,
+      "destination": 0,
+      "all_candidates": 18,
+      "yen16_candidates": 16,
+      "was_truncated": true,
+      "ms_dfs_all": 1.3743899995461106,
+      "ms_yen_all": 1.442705001682043,
+      "ms_yen16": 1.0289500001817942
+    },
+    {
+      "nodes": 50,
+      "degree": 3.6,
+      "topology_seed": 50513,
+      "source": 35,
+      "destination": 30,
+      "all_candidates": 3,
+      "yen16_candidates": 3,
+      "was_truncated": false,
+      "ms_dfs_all": 0.5785000044852495,
+      "ms_yen_all": 0.19210500176995993,
+      "ms_yen16": 0.2601150015834719
+    },
+    {
+      "nodes": 50,
+      "degree": 3.6,
+      "topology_seed": 50515,
+      "source": 49,
+      "destination": 11,
+      "all_candidates": 5,
+      "yen16_candidates": 5,
+      "was_truncated": false,
+      "ms_dfs_all": 0.9705549979116768,
+      "ms_yen_all": 0.6118450022768229,
+      "ms_yen16": 0.4419399949256331
+    },
+    {
+      "nodes": 50,
+      "degree": 6.0,
+      "topology_seed": 50507,
+      "source": 3,
+      "destination": 46,
+      "all_candidates": 26,
+      "yen16_candidates": 16,
+      "was_truncated": true,
+      "ms_dfs_all": 3.306094999425113,
+      "ms_yen_all": 2.2996050014626235,
+      "ms_yen16": 1.8438250001054257
+    },
+    {
+      "nodes": 50,
+      "degree": 6.0,
+      "topology_seed": 50508,
+      "source": 6,
+      "destination": 17,
+      "all_candidates": 19,
+      "yen16_candidates": 16,
+      "was_truncated": true,
+      "ms_dfs_all": 3.6798749992158264,
+      "ms_yen_all": 2.077594998991117,
+      "ms_yen16": 1.2951299955602735
+    },
+    {
+      "nodes": 50,
+      "degree": 6.0,
+      "topology_seed": 50510,
+      "source": 22,
+      "destination": 20,
+      "all_candidates": 34,
+      "yen16_candidates": 16,
+      "was_truncated": true,
+      "ms_dfs_all": 3.076475003035739,
+      "ms_yen_all": 2.8444299998227507,
+      "ms_yen16": 1.2992249976377934
+    },
+    {
+      "nodes": 50,
+      "degree": 6.0,
+      "topology_seed": 50511,
+      "source": 16,
+      "destination": 34,
+      "all_candidates": 17,
+      "yen16_candidates": 16,
+      "was_truncated": true,
+      "ms_dfs_all": 1.5471249993424863,
+      "ms_yen_all": 1.5122600016184151,
+      "ms_yen16": 0.9060500015038997
+    },
+    {
+      "nodes": 50,
+      "degree": 6.0,
+      "topology_seed": 50512,
+      "source": 2,
+      "destination": 20,
+      "all_candidates": 25,
+      "yen16_candidates": 16,
+      "was_truncated": true,
+      "ms_dfs_all": 1.1813749966677278,
+      "ms_yen_all": 2.0254199975170195,
+      "ms_yen16": 1.4225849998183548
+    },
+    {
+      "nodes": 100,
+      "degree": 3.6,
+      "topology_seed": 51010,
+      "source": 54,
+      "destination": 24,
+      "all_candidates": 5,
+      "yen16_candidates": 5,
+      "was_truncated": false,
+      "ms_dfs_all": 1.6095699975267053,
+      "ms_yen_all": 0.4265700001269579,
+      "ms_yen16": 0.3337250032927841
+    },
+    {
+      "nodes": 100,
+      "degree": 3.6,
+      "topology_seed": 51033,
+      "source": 31,
+      "destination": 94,
+      "all_candidates": 4,
+      "yen16_candidates": 4,
+      "was_truncated": false,
+      "ms_dfs_all": 0.7678750029299408,
+      "ms_yen_all": 0.3217549994587898,
+      "ms_yen16": 0.3445850044954568
+    },
+    {
+      "nodes": 100,
+      "degree": 3.6,
+      "topology_seed": 51053,
+      "source": 42,
+      "destination": 18,
+      "all_candidates": 6,
+      "yen16_candidates": 6,
+      "was_truncated": false,
+      "ms_dfs_all": 0.8670999959576875,
+      "ms_yen_all": 0.43255999917164445,
+      "ms_yen16": 0.4098400007933378
+    },
+    {
+      "nodes": 100,
+      "degree": 3.6,
+      "topology_seed": 51056,
+      "source": 65,
+      "destination": 27,
+      "all_candidates": 1,
+      "yen16_candidates": 1,
+      "was_truncated": false,
+      "ms_dfs_all": 0.2525750023778528,
+      "ms_yen_all": 0.08023499976843596,
+      "ms_yen16": 0.08111500064842403
+    },
+    {
+      "nodes": 100,
+      "degree": 3.6,
+      "topology_seed": 51078,
+      "source": 26,
+      "destination": 30,
+      "all_candidates": 3,
+      "yen16_candidates": 3,
+      "was_truncated": false,
+      "ms_dfs_all": 0.6323450012132525,
+      "ms_yen_all": 0.45045000151731074,
+      "ms_yen16": 0.522270001238212
+    },
+    {
+      "nodes": 100,
+      "degree": 6.0,
+      "topology_seed": 51007,
+      "source": 70,
+      "destination": 13,
+      "all_candidates": 25,
+      "yen16_candidates": 16,
+      "was_truncated": true,
+      "ms_dfs_all": 4.322105000028387,
+      "ms_yen_all": 1.9150000007357448,
+      "ms_yen16": 1.0564950003754348
+    },
+    {
+      "nodes": 100,
+      "degree": 6.0,
+      "topology_seed": 51008,
+      "source": 86,
+      "destination": 11,
+      "all_candidates": 11,
+      "yen16_candidates": 11,
+      "was_truncated": false,
+      "ms_dfs_all": 3.2588600006420165,
+      "ms_yen_all": 1.6817950003314763,
+      "ms_yen16": 1.3174149964470416
+    },
+    {
+      "nodes": 100,
+      "degree": 6.0,
+      "topology_seed": 51009,
+      "source": 13,
+      "destination": 79,
+      "all_candidates": 9,
+      "yen16_candidates": 9,
+      "was_truncated": false,
+      "ms_dfs_all": 2.5631750002503395,
+      "ms_yen_all": 0.8462500001769513,
+      "ms_yen16": 0.7801649975590408
+    },
+    {
+      "nodes": 100,
+      "degree": 6.0,
+      "topology_seed": 51010,
+      "source": 54,
+      "destination": 24,
+      "all_candidates": 24,
+      "yen16_candidates": 16,
+      "was_truncated": true,
+      "ms_dfs_all": 5.105639999965206,
+      "ms_yen_all": 2.08526499918662,
+      "ms_yen16": 1.7024700006004423
+    },
+    {
+      "nodes": 100,
+      "degree": 6.0,
+      "topology_seed": 51011,
+      "source": 36,
+      "destination": 85,
+      "all_candidates": 6,
+      "yen16_candidates": 6,
+      "was_truncated": false,
+      "ms_dfs_all": 2.546515001449734,
+      "ms_yen_all": 0.7381049974355847,
+      "ms_yen16": 0.823320000199601
+    },
+    {
+      "nodes": 200,
+      "degree": 3.6,
+      "topology_seed": 52171,
+      "source": 132,
+      "destination": 184,
+      "all_candidates": 2,
+      "yen16_candidates": 2,
+      "was_truncated": false,
+      "ms_dfs_all": 0.25672499905340374,
+      "ms_yen_all": 0.15299500082619488,
+      "ms_yen16": 0.1627999998163432
+    },
+    {
+      "nodes": 200,
+      "degree": 3.6,
+      "topology_seed": 52546,
+      "source": 111,
+      "destination": 129,
+      "all_candidates": 3,
+      "yen16_candidates": 3,
+      "was_truncated": false,
+      "ms_dfs_all": 1.0808349994476885,
+      "ms_yen_all": 0.5013499991036952,
+      "ms_yen16": 0.37290999898687005
+    },
+    {
+      "nodes": 200,
+      "degree": 3.6,
+      "topology_seed": 52629,
+      "source": 37,
+      "destination": 63,
+      "all_candidates": 1,
+      "yen16_candidates": 1,
+      "was_truncated": false,
+      "ms_dfs_all": 1.1923050042241812,
+      "ms_yen_all": 0.19193500047549605,
+      "ms_yen16": 0.1806700020097196
+    },
+    {
+      "nodes": 200,
+      "degree": 3.6,
+      "topology_seed": 52715,
+      "source": 77,
+      "destination": 36,
+      "all_candidates": 4,
+      "yen16_candidates": 4,
+      "was_truncated": false,
+      "ms_dfs_all": 0.6341299973428249,
+      "ms_yen_all": 0.47882500221021473,
+      "ms_yen16": 0.35504999686963856
+    },
+    {
+      "nodes": 200,
+      "degree": 3.6,
+      "topology_seed": 53266,
+      "source": 26,
+      "destination": 179,
+      "all_candidates": 3,
+      "yen16_candidates": 3,
+      "was_truncated": false,
+      "ms_dfs_all": 1.2522950011771172,
+      "ms_yen_all": 0.32818500185385346,
+      "ms_yen16": 0.3819349978584796
+    },
+    {
+      "nodes": 200,
+      "degree": 6.0,
+      "topology_seed": 52007,
+      "source": 58,
+      "destination": 128,
+      "all_candidates": 13,
+      "yen16_candidates": 13,
+      "was_truncated": false,
+      "ms_dfs_all": 4.780140001093969,
+      "ms_yen_all": 1.996224996400997,
+      "ms_yen16": 1.6118099971208721
+    },
+    {
+      "nodes": 200,
+      "degree": 6.0,
+      "topology_seed": 52008,
+      "source": 55,
+      "destination": 10,
+      "all_candidates": 6,
+      "yen16_candidates": 6,
+      "was_truncated": false,
+      "ms_dfs_all": 3.079930000239983,
+      "ms_yen_all": 0.7903449994046241,
+      "ms_yen16": 0.6175499991513789
+    },
+    {
+      "nodes": 200,
+      "degree": 6.0,
+      "topology_seed": 52009,
+      "source": 58,
+      "destination": 32,
+      "all_candidates": 4,
+      "yen16_candidates": 4,
+      "was_truncated": false,
+      "ms_dfs_all": 2.282164996722713,
+      "ms_yen_all": 0.869624997721985,
+      "ms_yen16": 0.6510900042485446
+    },
+    {
+      "nodes": 200,
+      "degree": 6.0,
+      "topology_seed": 52010,
+      "source": 18,
+      "destination": 117,
+      "all_candidates": 15,
+      "yen16_candidates": 15,
+      "was_truncated": false,
+      "ms_dfs_all": 7.3927649995312095,
+      "ms_yen_all": 3.261880000354722,
+      "ms_yen16": 3.0793750018347055
+    },
+    {
+      "nodes": 200,
+      "degree": 6.0,
+      "topology_seed": 52011,
+      "source": 64,
+      "destination": 105,
+      "all_candidates": 7,
+      "yen16_candidates": 7,
+      "was_truncated": false,
+      "ms_dfs_all": 4.045930004213005,
+      "ms_yen_all": 0.8020150009542704,
+      "ms_yen16": 0.7154749997425824
+    }
+  ]
+}

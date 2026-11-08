@@ -1,0 +1,2257 @@
+{
+  "design": {
+    "purpose": "Energy-matched stochastic routing baseline, no test-set retuning",
+    "graph_family": "Connected Erdos-Renyi, expected degree 3.6, path count >=4, survivable failure",
+    "training_topologies": 30,
+    "heldout_topologies": 30,
+    "sizes": [
+      10,
+      15,
+      20
+    ],
+    "new_test_seed_range": "1_000_000 + 1000*n + offset",
+    "routing_seeds_per_topology": 5,
+    "time_steps": 40,
+    "threat_steps": "15-24",
+    "cost_model": "hop",
+    "beta_fit_target": "NTAR-R mean total-horizon energy on TRAINING topologies",
+    "beta_fit_method": "Bisection of analytically expected softmax energy on training topologies",
+    "policy": "P(p) proportional to exp(-beta * E(p)/Emax)",
+    "policy_uses_threat_or_history": false,
+    "test_recalibration": false,
+    "sampling_unit_for_inference": "topology (seeds averaged within topology)",
+    "primary_confirmatory_metrics": [
+      "energy",
+      "m1",
+      "pa1"
+    ],
+    "primary_multiple_testing": "Holm within each NTAR-R vs competitor comparison",
+    "policy_aware_metric": "Bayes-optimal expected hit rate given full selection distribution"
+  },
+  "environment": {
+    "python": "3.14.0 (tags/v3.14.0:ebf955d, Oct  7 2025, 10:15:03) [MSC v.1944 64 bit (AMD64)]",
+    "platform": "Windows-11-10.0.26300-SP0",
+    "numpy": "2.5.4",
+    "networkx": "3.6.1",
+    "code_commit": "c6598dcbafe322a75fd9b64baaf9828414c7e8dc"
+  },
+  "calibration": {
+    "beta": 7.771696970320244,
+    "target_ntar_r_energy": 0.1709833333333334,
+    "uniform_expected_energy": 0.18751800507012198,
+    "matched_expected_energy": 0.17098333333333338,
+    "large_beta_energy": 0.17048374644434017
+  },
+  "test_topology_metadata": [
+    {
+      "graph_seed": 1010004,
+      "nodes": 10,
+      "candidate_paths": 4,
+      "candidate_paths_during_failure": 1,
+      "src": 0,
+      "dst": 7,
+      "fail": 3
+    },
+    {
+      "graph_seed": 1010006,
+      "nodes": 10,
+      "candidate_paths": 17,
+      "candidate_paths_during_failure": 10,
+      "src": 1,
+      "dst": 4,
+      "fail": 5
+    },
+    {
+      "graph_seed": 1010007,
+      "nodes": 10,
+      "candidate_paths": 11,
+      "candidate_paths_during_failure": 2,
+      "src": 3,
+      "dst": 6,
+      "fail": 2
+    },
+    {
+      "graph_seed": 1010008,
+      "nodes": 10,
+      "candidate_paths": 14,
+      "candidate_paths_during_failure": 11,
+      "src": 1,
+      "dst": 5,
+      "fail": 3
+    },
+    {
+      "graph_seed": 1010010,
+      "nodes": 10,
+      "candidate_paths": 19,
+      "candidate_paths_during_failure": 12,
+      "src": 1,
+      "dst": 3,
+      "fail": 0
+    },
+    {
+      "graph_seed": 1010013,
+      "nodes": 10,
+      "candidate_paths": 6,
+      "candidate_paths_during_failure": 3,
+      "src": 2,
+      "dst": 7,
+      "fail": 8
+    },
+    {
+      "graph_seed": 1010015,
+      "nodes": 10,
+      "candidate_paths": 9,
+      "candidate_paths_during_failure": 5,
+      "src": 4,
+      "dst": 6,
+      "fail": 0
+    },
+    {
+      "graph_seed": 1010016,
+      "nodes": 10,
+      "candidate_paths": 14,
+      "candidate_paths_during_failure": 6,
+      "src": 0,
+      "dst": 2,
+      "fail": 4
+    },
+    {
+      "graph_seed": 1010017,
+      "nodes": 10,
+      "candidate_paths": 10,
+      "candidate_paths_during_failure": 4,
+      "src": 1,
+      "dst": 5,
+      "fail": 3
+    },
+    {
+      "graph_seed": 1010018,
+      "nodes": 10,
+      "candidate_paths": 7,
+      "candidate_paths_during_failure": 1,
+      "src": 2,
+      "dst": 8,
+      "fail": 5
+    },
+    {
+      "graph_seed": 1015001,
+      "nodes": 15,
+      "candidate_paths": 17,
+      "candidate_paths_during_failure": 9,
+      "src": 3,
+      "dst": 11,
+      "fail": 4
+    },
+    {
+      "graph_seed": 1015004,
+      "nodes": 15,
+      "candidate_paths": 10,
+      "candidate_paths_during_failure": 9,
+      "src": 0,
+      "dst": 12,
+      "fail": 1
+    },
+    {
+      "graph_seed": 1015006,
+      "nodes": 15,
+      "candidate_paths": 12,
+      "candidate_paths_during_failure": 8,
+      "src": 4,
+      "dst": 14,
+      "fail": 2
+    },
+    {
+      "graph_seed": 1015008,
+      "nodes": 15,
+      "candidate_paths": 7,
+      "candidate_paths_during_failure": 3,
+      "src": 7,
+      "dst": 10,
+      "fail": 13
+    },
+    {
+      "graph_seed": 1015009,
+      "nodes": 15,
+      "candidate_paths": 14,
+      "candidate_paths_during_failure": 6,
+      "src": 9,
+      "dst": 10,
+      "fail": 0
+    },
+    {
+      "graph_seed": 1015010,
+      "nodes": 15,
+      "candidate_paths": 15,
+      "candidate_paths_during_failure": 8,
+      "src": 2,
+      "dst": 3,
+      "fail": 11
+    },
+    {
+      "graph_seed": 1015012,
+      "nodes": 15,
+      "candidate_paths": 12,
+      "candidate_paths_during_failure": 4,
+      "src": 4,
+      "dst": 13,
+      "fail": 2
+    },
+    {
+      "graph_seed": 1015014,
+      "nodes": 15,
+      "candidate_paths": 16,
+      "candidate_paths_during_failure": 13,
+      "src": 0,
+      "dst": 2,
+      "fail": 7
+    },
+    {
+      "graph_seed": 1015015,
+      "nodes": 15,
+      "candidate_paths": 8,
+      "candidate_paths_during_failure": 4,
+      "src": 8,
+      "dst": 12,
+      "fail": 11
+    },
+    {
+      "graph_seed": 1015018,
+      "nodes": 15,
+      "candidate_paths": 6,
+      "candidate_paths_during_failure": 2,
+      "src": 2,
+      "dst": 13,
+      "fail": 4
+    },
+    {
+      "graph_seed": 1020001,
+      "nodes": 20,
+      "candidate_paths": 12,
+      "candidate_paths_during_failure": 10,
+      "src": 0,
+      "dst": 2,
+      "fail": 3
+    },
+    {
+      "graph_seed": 1020002,
+      "nodes": 20,
+      "candidate_paths": 25,
+      "candidate_paths_during_failure": 12,
+      "src": 1,
+      "dst": 2,
+      "fail": 0
+    },
+    {
+      "graph_seed": 1020003,
+      "nodes": 20,
+      "candidate_paths": 7,
+      "candidate_paths_during_failure": 3,
+      "src": 16,
+      "dst": 17,
+      "fail": 3
+    },
+    {
+      "graph_seed": 1020005,
+      "nodes": 20,
+      "candidate_paths": 8,
+      "candidate_paths_during_failure": 5,
+      "src": 2,
+      "dst": 10,
+      "fail": 6
+    },
+    {
+      "graph_seed": 1020006,
+      "nodes": 20,
+      "candidate_paths": 7,
+      "candidate_paths_during_failure": 5,
+      "src": 0,
+      "dst": 2,
+      "fail": 1
+    },
+    {
+      "graph_seed": 1020007,
+      "nodes": 20,
+      "candidate_paths": 9,
+      "candidate_paths_during_failure": 7,
+      "src": 8,
+      "dst": 17,
+      "fail": 5
+    },
+    {
+      "graph_seed": 1020009,
+      "nodes": 20,
+      "candidate_paths": 8,
+      "candidate_paths_during_failure": 4,
+      "src": 10,
+      "dst": 11,
+      "fail": 1
+    },
+    {
+      "graph_seed": 1020012,
+      "nodes": 20,
+      "candidate_paths": 11,
+      "candidate_paths_during_failure": 7,
+      "src": 3,
+      "dst": 6,
+      "fail": 10
+    },
+    {
+      "graph_seed": 1020013,
+      "nodes": 20,
+      "candidate_paths": 8,
+      "candidate_paths_during_failure": 3,
+      "src": 4,
+      "dst": 5,
+      "fail": 9
+    },
+    {
+      "graph_seed": 1020017,
+      "nodes": 20,
+      "candidate_paths": 11,
+      "candidate_paths_during_failure": 7,
+      "src": 7,
+      "dst": 19,
+      "fail": 6
+    }
+  ],
+  "heldout_method_summary": {
+    "Fixed-Weight": {
+      "energy": {
+        "mean": 0.16024999999999998,
+        "ci95_half_width": 0.0012762098847843351
+      },
+      "energy_nom": {
+        "mean": 0.15783333333333333,
+        "ci95_half_width": 0.002015961240384957
+      },
+      "energy_thr": {
+        "mean": 0.1675,
+        "ci95_half_width": 0.005627853274212024
+      },
+      "latency": {
+        "mean": 32.05,
+        "ci95_half_width": 0.2552419769568674
+      },
+      "f1": {
+        "mean": 0.16,
+        "ci95_half_width": 0.12770572705402558
+      },
+      "f3": {
+        "mean": 0.47333333333333344,
+        "ci95_half_width": 0.12245229564287641
+      },
+      "m1": {
+        "mean": 0.5733333333333334,
+        "ci95_half_width": 0.12284431125131291
+      },
+      "m3": {
+        "mean": 0.65,
+        "ci95_half_width": 0.11255706548424049
+      },
+      "pa1": {
+        "mean": 1.0,
+        "ci95_half_width": 0.0
+      },
+      "pa3": {
+        "mean": 1.0,
+        "ci95_half_width": 0.0
+      },
+      "h_avail": {
+        "mean": 0.7007304047232997,
+        "ci95_half_width": 0.05060480486543331
+      }
+    },
+    "Random": {
+      "energy": {
+        "mean": 0.186525,
+        "ci95_half_width": 0.0019160172531149254
+      },
+      "energy_nom": {
+        "mean": 0.18653333333333338,
+        "ci95_half_width": 0.001908936970852534
+      },
+      "energy_thr": {
+        "mean": 0.18649999999999997,
+        "ci95_half_width": 0.0022269838538358385
+      },
+      "latency": {
+        "mean": 37.30499999999999,
+        "ci95_half_width": 0.383203450622985
+      },
+      "f1": {
+        "mean": 0.10000000000000002,
+        "ci95_half_width": 0.02157347624327977
+      },
+      "f3": {
+        "mean": 0.2946666666666667,
+        "ci95_half_width": 0.056363758132178386
+      },
+      "m1": {
+        "mean": 0.10133333333333336,
+        "ci95_half_width": 0.02009019629536688
+      },
+      "m3": {
+        "mean": 0.3006666666666667,
+        "ci95_half_width": 0.0574301948039069
+      },
+      "pa1": {
+        "mean": 0.10511474728115594,
+        "ci95_half_width": 0.016405900218114215
+      },
+      "pa3": {
+        "mean": 0.3153442418434679,
+        "ci95_half_width": 0.04921770065434263
+      },
+      "h_avail": {
+        "mean": 0.9501982963554858,
+        "ci95_half_width": 0.006131524205205113
+      }
+    },
+    "NTAR-R": {
+      "energy": {
+        "mean": 0.17019166666666669,
+        "ci95_half_width": 0.001667705170321014
+      },
+      "energy_nom": {
+        "mean": 0.1631333333333334,
+        "ci95_half_width": 0.001890941523191112
+      },
+      "energy_thr": {
+        "mean": 0.19136666666666666,
+        "ci95_half_width": 0.0020060258870560096
+      },
+      "latency": {
+        "mean": 34.038333333333334,
+        "ci95_half_width": 0.33354103406420277
+      },
+      "f1": {
+        "mean": 0.04600000000000001,
+        "ci95_half_width": 0.01892861662615695
+      },
+      "f3": {
+        "mean": 0.17400000000000002,
+        "ci95_half_width": 0.053679917237444134
+      },
+      "m1": {
+        "mean": 0.06600000000000002,
+        "ci95_half_width": 0.02450746775677993
+      },
+      "m3": {
+        "mean": 0.202,
+        "ci95_half_width": 0.05661625850142714
+      },
+      "pa1": {
+        "mean": 0.2477630106133976,
+        "ci95_half_width": 0.014699350009794793
+      },
+      "pa3": {
+        "mean": 0.5602890318401929,
+        "ci95_half_width": 0.03612217241609043
+      },
+      "h_avail": {
+        "mean": 0.8743535210034561,
+        "ci95_half_width": 0.016727237784552026
+      }
+    },
+    "Energy-Matched Random": {
+      "energy": {
+        "mean": 0.1697916666666667,
+        "ci95_half_width": 0.002116579475679448
+      },
+      "energy_nom": {
+        "mean": 0.16952222222222224,
+        "ci95_half_width": 0.0022898891608940397
+      },
+      "energy_thr": {
+        "mean": 0.1706,
+        "ci95_half_width": 0.0021742195029777556
+      },
+      "latency": {
+        "mean": 33.958333333333336,
+        "ci95_half_width": 0.4233158951358898
+      },
+      "f1": {
+        "mean": 0.2166666666666667,
+        "ci95_half_width": 0.04731730792265831
+      },
+      "f3": {
+        "mean": 0.518,
+        "ci95_half_width": 0.06227777626805332
+      },
+      "m1": {
+        "mean": 0.20533333333333334,
+        "ci95_half_width": 0.04260570659689016
+      },
+      "m3": {
+        "mean": 0.4879999999999999,
+        "ci95_half_width": 0.062408882650272966
+      },
+      "pa1": {
+        "mean": 0.2550279062944445,
+        "ci95_half_width": 0.04338062269731341
+      },
+      "pa3": {
+        "mean": 0.592165167786787,
+        "ci95_half_width": 0.046946002010975325
+      },
+      "h_avail": {
+        "mean": 0.8277362736477732,
+        "ci95_half_width": 0.01059370993153614
+      }
+    }
+  },
+  "heldout_ntar_r_minus_competitor": {
+    "Energy-Matched Random": {
+      "energy": {
+        "mean_difference": 0.00040000000000000034,
+        "ci95_half_width": 0.001106072716608764,
+        "wilcoxon_p": 0.26223562765394437,
+        "holm_adjusted_p_primary_family": 0.5244712553078887
+      },
+      "energy_nom": {
+        "mean_difference": -0.006388888888888878,
+        "ci95_half_width": 0.0014017704466740364,
+        "wilcoxon_p": 1.917328010935302e-06
+      },
+      "energy_thr": {
+        "mean_difference": 0.02076666666666667,
+        "ci95_half_width": 0.0022526003054781788,
+        "wilcoxon_p": 1.7256857880058036e-06
+      },
+      "latency": {
+        "mean_difference": 0.08000000000000067,
+        "ci95_half_width": 0.22121454332175297,
+        "wilcoxon_p": 0.26647395570533117
+      },
+      "f1": {
+        "mean_difference": -0.17066666666666666,
+        "ci95_half_width": 0.04065621709142538,
+        "wilcoxon_p": 1.9077738083440826e-06
+      },
+      "f3": {
+        "mean_difference": -0.3440000000000001,
+        "ci95_half_width": 0.0432982364801027,
+        "wilcoxon_p": 1.7300371292901245e-06
+      },
+      "m1": {
+        "mean_difference": -0.13933333333333336,
+        "ci95_half_width": 0.03189529332747154,
+        "wilcoxon_p": 1.726772765612998e-06,
+        "holm_adjusted_p_primary_family": 5.180318296838994e-06
+      },
+      "m3": {
+        "mean_difference": -0.286,
+        "ci95_half_width": 0.030832429919649792,
+        "wilcoxon_p": 1.7180929312456739e-06
+      },
+      "pa1": {
+        "mean_difference": -0.007264895681046853,
+        "ci95_half_width": 0.044170370885911615,
+        "wilcoxon_p": 0.8871948085725307,
+        "holm_adjusted_p_primary_family": 0.8871948085725307
+      },
+      "pa3": {
+        "mean_difference": -0.031876135946594115,
+        "ci95_half_width": 0.044457597630291903,
+        "wilcoxon_p": 0.08406547829508781
+      },
+      "h_avail": {
+        "mean_difference": 0.046617247355682914,
+        "ci95_half_width": 0.017761891911030298,
+        "wilcoxon_p": 3.453157842159271e-05
+      }
+    },
+    "Random": {
+      "energy": {
+        "mean_difference": -0.01633333333333332,
+        "ci95_half_width": 0.0008157867464729115,
+        "wilcoxon_p": 1.7289484360195754e-06,
+        "holm_adjusted_p_primary_family": 3.4578968720391508e-06
+      },
+      "energy_nom": {
+        "mean_difference": -0.023399999999999997,
+        "ci95_half_width": 0.0010911808785733566,
+        "wilcoxon_p": 1.7300371292901245e-06
+      },
+      "energy_thr": {
+        "mean_difference": 0.0048666666666666684,
+        "ci95_half_width": 0.0016575929990913288,
+        "wilcoxon_p": 2.7524869288340217e-05
+      },
+      "latency": {
+        "mean_difference": -3.2666666666666657,
+        "ci95_half_width": 0.1631573492945825,
+        "wilcoxon_p": 1.7278603148724103e-06
+      },
+      "f1": {
+        "mean_difference": -0.054000000000000006,
+        "ci95_half_width": 0.02346513849475657,
+        "wilcoxon_p": 8.910960849106498e-05
+      },
+      "f3": {
+        "mean_difference": -0.12066666666666669,
+        "ci95_half_width": 0.02429730229193583,
+        "wilcoxon_p": 2.8394088737118136e-06
+      },
+      "m1": {
+        "mean_difference": -0.035333333333333335,
+        "ci95_half_width": 0.02100281946882368,
+        "wilcoxon_p": 0.00391311448863337,
+        "holm_adjusted_p_primary_family": 0.00391311448863337
+      },
+      "m3": {
+        "mean_difference": -0.09866666666666668,
+        "ci95_half_width": 0.02766185022587546,
+        "wilcoxon_p": 7.56293651733592e-06
+      },
+      "pa1": {
+        "mean_difference": 0.14264826333224165,
+        "ci95_half_width": 0.01964309691881683,
+        "wilcoxon_p": 1.862645149230957e-09,
+        "holm_adjusted_p_primary_family": 5.587935447692871e-09
+      },
+      "pa3": {
+        "mean_difference": 0.24494478999672495,
+        "ci95_half_width": 0.03701579038501477,
+        "wilcoxon_p": 1.862645149230957e-09
+      },
+      "h_avail": {
+        "mean_difference": -0.07584477535202956,
+        "ci95_half_width": 0.020318868028343873,
+        "wilcoxon_p": 5.587935447692871e-09
+      }
+    },
+    "Fixed-Weight": {
+      "energy": {
+        "mean_difference": 0.009941666666666672,
+        "ci95_half_width": 0.0011302818202877307,
+        "wilcoxon_p": 1.7289484360195754e-06,
+        "holm_adjusted_p_primary_family": 3.4578968720391508e-06
+      },
+      "energy_nom": {
+        "mean_difference": 0.005300000000000013,
+        "ci95_half_width": 0.002697892691406828,
+        "wilcoxon_p": 0.0004891839776411454
+      },
+      "energy_thr": {
+        "mean_difference": 0.023866666666666668,
+        "ci95_half_width": 0.006139396906987523,
+        "wilcoxon_p": 3.508985847253369e-06
+      },
+      "latency": {
+        "mean_difference": 1.9883333333333342,
+        "ci95_half_width": 0.22605636405754598,
+        "wilcoxon_p": 1.7159286750586906e-06
+      },
+      "f1": {
+        "mean_difference": -0.114,
+        "ci95_half_width": 0.11636115693536443,
+        "wilcoxon_p": 0.3554066010048348
+      },
+      "f3": {
+        "mean_difference": -0.29933333333333334,
+        "ci95_half_width": 0.09394418418767364,
+        "wilcoxon_p": 4.094054133131289e-06
+      },
+      "m1": {
+        "mean_difference": -0.5073333333333333,
+        "ci95_half_width": 0.12314375112987384,
+        "wilcoxon_p": 2.5527446889909943e-06,
+        "holm_adjusted_p_primary_family": 3.4578968720391508e-06
+      },
+      "m3": {
+        "mean_difference": -0.44800000000000006,
+        "ci95_half_width": 0.10874811982790514,
+        "wilcoxon_p": 3.1505409540854934e-06
+      },
+      "pa1": {
+        "mean_difference": -0.7522369893866023,
+        "ci95_half_width": 0.01469935000979479,
+        "wilcoxon_p": 1.862645149230957e-09,
+        "holm_adjusted_p_primary_family": 5.587935447692871e-09
+      },
+      "pa3": {
+        "mean_difference": -0.43971096815980715,
+        "ci95_half_width": 0.03612217241609043,
+        "wilcoxon_p": 1.862645149230957e-09
+      },
+      "h_avail": {
+        "mean_difference": 0.17362311628015653,
+        "ci95_half_width": 0.03578146274468934,
+        "wilcoxon_p": 1.862645149230957e-09
+      }
+    }
+  },
+  "heldout_energy_gap_ntar_r_vs_matched_percent": 0.23502913381970347,
+  "heldout_per_topology_metrics": {
+    "Fixed-Weight": [
+      {
+        "energy": 0.15875,
+        "energy_nom": 0.16166666666666674,
+        "energy_thr": 0.15,
+        "latency": 31.75,
+        "f1": 1.0,
+        "f3": 1.0,
+        "m1": 1.0,
+        "m3": 1.0,
+        "pa1": 1.0,
+        "pa3": 1.0,
+        "h_avail": 0.43503096727785906
+      },
+      {
+        "energy": 0.16500000000000004,
+        "energy_nom": 0.17000000000000004,
+        "energy_thr": 0.15,
+        "latency": 33.0,
+        "f1": 0.0,
+        "f3": 0.2,
+        "m1": 1.0,
+        "m3": 1.0,
+        "pa1": 1.0,
+        "pa3": 1.0,
+        "h_avail": 0.8754117370144557
+      },
+      {
+        "energy": 0.16375,
+        "energy_nom": 0.15666666666666673,
+        "energy_thr": 0.185,
+        "latency": 32.75,
+        "f1": 0.2,
+        "f3": 0.3,
+        "m1": 0.3,
+        "m3": 0.3,
+        "pa1": 1.0,
+        "pa3": 1.0,
+        "h_avail": 0.7007711572483544
+      },
+      {
+        "energy": 0.1625,
+        "energy_nom": 0.1600000000000001,
+        "energy_thr": 0.17,
+        "latency": 32.5,
+        "f1": 0.1,
+        "f3": 0.2,
+        "m1": 0.2,
+        "m3": 0.6,
+        "pa1": 1.0,
+        "pa3": 1.0,
+        "h_avail": 0.8245498348419285
+      },
+      {
+        "energy": 0.1625,
+        "energy_nom": 0.16666666666666669,
+        "energy_thr": 0.15,
+        "latency": 32.5,
+        "f1": 0.0,
+        "f3": 0.1,
+        "m1": 1.0,
+        "m3": 1.0,
+        "pa1": 1.0,
+        "pa3": 1.0,
+        "h_avail": 0.8428773825331405
+      },
+      {
+        "energy": 0.16,
+        "energy_nom": 0.1633333333333334,
+        "energy_thr": 0.15,
+        "latency": 32.0,
+        "f1": 1.0,
+        "f3": 1.0,
+        "m1": 1.0,
+        "m3": 1.0,
+        "pa1": 1.0,
+        "pa3": 1.0,
+        "h_avail": 0.45336367338420436
+      },
+      {
+        "energy": 0.15750000000000003,
+        "energy_nom": 0.15000000000000005,
+        "energy_thr": 0.18,
+        "latency": 31.5,
+        "f1": 0.0,
+        "f3": 0.4,
+        "m1": 0.3,
+        "m3": 0.4,
+        "pa1": 1.0,
+        "pa3": 1.0,
+        "h_avail": 0.7393714215175745
+      },
+      {
+        "energy": 0.16375,
+        "energy_nom": 0.15500000000000005,
+        "energy_thr": 0.19,
+        "latency": 32.75,
+        "f1": 0.0,
+        "f3": 0.2,
+        "m1": 0.1,
+        "m3": 0.2,
+        "pa1": 1.0,
+        "pa3": 1.0,
+        "h_avail": 0.7742201561093555
+      },
+      {
+        "energy": 0.15625000000000003,
+        "energy_nom": 0.15833333333333338,
+        "energy_thr": 0.15,
+        "latency": 31.25,
+        "f1": 0.0,
+        "f3": 0.2,
+        "m1": 0.9,
+        "m3": 1.0,
+        "pa1": 1.0,
+        "pa3": 1.0,
+        "h_avail": 0.8625992063154877
+      },
+      {
+        "energy": 0.15625000000000003,
+        "energy_nom": 0.15333333333333338,
+        "energy_thr": 0.16499999999999998,
+        "latency": 31.25,
+        "f1": 0.0,
+        "f3": 0.7,
+        "m1": 0.5,
+        "m3": 0.7,
+        "pa1": 1.0,
+        "pa3": 1.0,
+        "h_avail": 0.6085052243607534
+      },
+      {
+        "energy": 0.1675,
+        "energy_nom": 0.1600000000000001,
+        "energy_thr": 0.19,
+        "latency": 33.5,
+        "f1": 0.0,
+        "f3": 0.2,
+        "m1": 0.1,
+        "m3": 0.2,
+        "pa1": 1.0,
+        "pa3": 1.0,
+        "h_avail": 0.8062365267228344
+      },
+      {
+        "energy": 0.15875,
+        "energy_nom": 0.15000000000000005,
+        "energy_thr": 0.185,
+        "latency": 31.75,
+        "f1": 0.0,
+        "f3": 0.3,
+        "m1": 0.2,
+        "m3": 0.3,
+        "pa1": 1.0,
+        "pa3": 1.0,
+        "h_avail": 0.7429110260724268
+      },
+      {
+        "energy": 0.16125,
+        "energy_nom": 0.15000000000000005,
+        "energy_thr": 0.195,
+        "latency": 32.25,
+        "f1": 0.0,
+        "f3": 0.1,
+        "m1": 0.1,
+        "m3": 0.1,
+        "pa1": 1.0,
+        "pa3": 1.0,
+        "h_avail": 0.7558294826719536
+      },
+      {
+        "energy": 0.15375,
+        "energy_nom": 0.15000000000000005,
+        "energy_thr": 0.16500000000000004,
+        "latency": 30.75,
+        "f1": 0.0,
+        "f3": 0.4,
+        "m1": 0.5,
+        "m3": 0.7,
+        "pa1": 1.0,
+        "pa3": 1.0,
+        "h_avail": 0.8377090750849157
+      },
+      {
+        "energy": 0.16375,
+        "energy_nom": 0.15333333333333338,
+        "energy_thr": 0.195,
+        "latency": 32.75,
+        "f1": 0.0,
+        "f3": 0.1,
+        "m1": 0.1,
+        "m3": 0.1,
+        "pa1": 1.0,
+        "pa3": 1.0,
+        "h_avail": 0.7742201561093555
+      },
+      {
+        "energy": 0.16499999999999998,
+        "energy_nom": 0.16166666666666674,
+        "energy_thr": 0.175,
+        "latency": 33.0,
+        "f1": 0.1,
+        "f3": 0.5,
+        "m1": 0.5,
+        "m3": 0.5,
+        "pa1": 1.0,
+        "pa3": 1.0,
+        "h_avail": 0.7845061809413414
+      },
+      {
+        "energy": 0.16,
+        "energy_nom": 0.15666666666666673,
+        "energy_thr": 0.17,
+        "latency": 32.0,
+        "f1": 0.0,
+        "f3": 0.3,
+        "m1": 0.5,
+        "m3": 0.6,
+        "pa1": 1.0,
+        "pa3": 1.0,
+        "h_avail": 0.815051229768675
+      },
+      {
+        "energy": 0.165,
+        "energy_nom": 0.1633333333333334,
+        "energy_thr": 0.17,
+        "latency": 33.0,
+        "f1": 0.0,
+        "f3": 0.2,
+        "m1": 0.6,
+        "m3": 0.6,
+        "pa1": 1.0,
+        "pa3": 1.0,
+        "h_avail": 0.83919491236176
+      },
+      {
+        "energy": 0.16125,
+        "energy_nom": 0.16500000000000006,
+        "energy_thr": 0.15,
+        "latency": 32.25,
+        "f1": 1.0,
+        "f3": 1.0,
+        "m1": 1.0,
+        "m3": 1.0,
+        "pa1": 1.0,
+        "pa3": 1.0,
+        "h_avail": 0.46080865144584476
+      },
+      {
+        "energy": 0.15500000000000003,
+        "energy_nom": 0.15500000000000005,
+        "energy_thr": 0.15500000000000003,
+        "latency": 31.0,
+        "f1": 0.0,
+        "f3": 0.9,
+        "m1": 0.8,
+        "m3": 0.9,
+        "pa1": 1.0,
+        "pa3": 1.0,
+        "h_avail": 0.6069703499186395
+      },
+      {
+        "energy": 0.16,
+        "energy_nom": 0.15666666666666673,
+        "energy_thr": 0.17,
+        "latency": 32.0,
+        "f1": 0.0,
+        "f3": 0.2,
+        "m1": 0.6,
+        "m3": 0.6,
+        "pa1": 1.0,
+        "pa3": 1.0,
+        "h_avail": 0.815051229768675
+      },
+      {
+        "energy": 0.1625,
+        "energy_nom": 0.16666666666666669,
+        "energy_thr": 0.15,
+        "latency": 32.5,
+        "f1": 0.0,
+        "f3": 0.0,
+        "m1": 1.0,
+        "m3": 1.0,
+        "pa1": 1.0,
+        "pa3": 1.0,
+        "h_avail": 0.7710148371100896
+      },
+      {
+        "energy": 0.15875,
+        "energy_nom": 0.16166666666666674,
+        "energy_thr": 0.15,
+        "latency": 31.75,
+        "f1": 1.0,
+        "f3": 1.0,
+        "m1": 1.0,
+        "m3": 1.0,
+        "pa1": 1.0,
+        "pa3": 1.0,
+        "h_avail": 0.3954978893808198
+      },
+      {
+        "energy": 0.15750000000000003,
+        "energy_nom": 0.15666666666666673,
+        "energy_thr": 0.16,
+        "latency": 31.5,
+        "f1": 0.0,
+        "f3": 0.8,
+        "m1": 0.7,
+        "m3": 0.8,
+        "pa1": 1.0,
+        "pa3": 1.0,
+        "h_avail": 0.6158615599415247
+      },
+      {
+        "energy": 0.15625000000000003,
+        "energy_nom": 0.15666666666666673,
+        "energy_thr": 0.15500000000000003,
+        "latency": 31.25,
+        "f1": 0.0,
+        "f3": 0.9,
+        "m1": 0.8,
+        "m3": 0.9,
+        "pa1": 1.0,
+        "pa3": 1.0,
+        "h_avail": 0.6085052243607534
+      },
+      {
+        "energy": 0.15750000000000003,
+        "energy_nom": 0.15000000000000005,
+        "energy_thr": 0.18,
+        "latency": 31.5,
+        "f1": 0.1,
+        "f3": 0.4,
+        "m1": 0.1,
+        "m3": 0.4,
+        "pa1": 1.0,
+        "pa3": 1.0,
+        "h_avail": 0.7393714215175745
+      },
+      {
+        "energy": 0.15750000000000003,
+        "energy_nom": 0.15666666666666673,
+        "energy_thr": 0.16,
+        "latency": 31.5,
+        "f1": 0.0,
+        "f3": 0.8,
+        "m1": 0.7,
+        "m3": 0.8,
+        "pa1": 1.0,
+        "pa3": 1.0,
+        "h_avail": 0.6158615599415247
+      },
+      {
+        "energy": 0.16125,
+        "energy_nom": 0.15666666666666673,
+        "energy_thr": 0.175,
+        "latency": 32.25,
+        "f1": 0.0,
+        "f3": 0.5,
+        "m1": 0.4,
+        "m3": 0.5,
+        "pa1": 1.0,
+        "pa3": 1.0,
+        "h_avail": 0.6523742540178203
+      },
+      {
+        "energy": 0.15750000000000003,
+        "energy_nom": 0.15666666666666673,
+        "energy_thr": 0.16,
+        "latency": 31.5,
+        "f1": 0.0,
+        "f3": 0.8,
+        "m1": 0.7,
+        "m3": 0.8,
+        "pa1": 1.0,
+        "pa3": 1.0,
+        "h_avail": 0.6158615599415247
+      },
+      {
+        "energy": 0.16125000000000003,
+        "energy_nom": 0.15666666666666673,
+        "energy_thr": 0.175,
+        "latency": 32.25,
+        "f1": 0.3,
+        "f3": 0.5,
+        "m1": 0.5,
+        "m3": 0.5,
+        "pa1": 1.0,
+        "pa3": 1.0,
+        "h_avail": 0.6523742540178203
+      }
+    ],
+    "Random": [
+      {
+        "energy": 0.189,
+        "energy_nom": 0.1886666666666667,
+        "energy_thr": 0.19,
+        "latency": 37.8,
+        "f1": 0.18,
+        "f3": 0.8,
+        "m1": 0.24,
+        "m3": 0.82,
+        "pa1": 0.25,
+        "pa3": 0.75,
+        "h_avail": 0.9516440755544078
+      },
+      {
+        "energy": 0.18650000000000003,
+        "energy_nom": 0.1863333333333334,
+        "energy_thr": 0.187,
+        "latency": 37.3,
+        "f1": 0.06000000000000001,
+        "f3": 0.18,
+        "m1": 0.1,
+        "m3": 0.16,
+        "pa1": 0.058823529411764705,
+        "pa3": 0.17647058823529413,
+        "h_avail": 0.9407729187947572
+      },
+      {
+        "energy": 0.192,
+        "energy_nom": 0.1916666666666667,
+        "energy_thr": 0.193,
+        "latency": 38.4,
+        "f1": 0.1,
+        "f3": 0.28,
+        "m1": 0.04,
+        "m3": 0.26,
+        "pa1": 0.09090909090909091,
+        "pa3": 0.27272727272727265,
+        "h_avail": 0.9577110900287575
+      },
+      {
+        "energy": 0.18575,
+        "energy_nom": 0.1856666666666667,
+        "energy_thr": 0.186,
+        "latency": 37.15,
+        "f1": 0.02,
+        "f3": 0.12000000000000002,
+        "m1": 0.1,
+        "m3": 0.2,
+        "pa1": 0.07142857142857142,
+        "pa3": 0.21428571428571427,
+        "h_avail": 0.9596550052804481
+      },
+      {
+        "energy": 0.18425,
+        "energy_nom": 0.18266666666666673,
+        "energy_thr": 0.189,
+        "latency": 36.85,
+        "f1": 0.06000000000000001,
+        "f3": 0.13999999999999999,
+        "m1": 0.04,
+        "m3": 0.13999999999999999,
+        "pa1": 0.05263157894736842,
+        "pa3": 0.15789473684210525,
+        "h_avail": 0.9346080947181008
+      },
+      {
+        "energy": 0.191,
+        "energy_nom": 0.19066666666666673,
+        "energy_thr": 0.192,
+        "latency": 38.2,
+        "f1": 0.24,
+        "f3": 0.5,
+        "m1": 0.12,
+        "m3": 0.5,
+        "pa1": 0.16666666666666669,
+        "pa3": 0.5,
+        "h_avail": 0.974381867341706
+      },
+      {
+        "energy": 0.18149999999999997,
+        "energy_nom": 0.18066666666666673,
+        "energy_thr": 0.184,
+        "latency": 36.3,
+        "f1": 0.08,
+        "f3": 0.3,
+        "m1": 0.04,
+        "m3": 0.33999999999999997,
+        "pa1": 0.11111111111111112,
+        "pa3": 0.33333333333333337,
+        "h_avail": 0.9567161401551756
+      },
+      {
+        "energy": 0.19,
+        "energy_nom": 0.1910000000000001,
+        "energy_thr": 0.18699999999999997,
+        "latency": 38.0,
+        "f1": 0.06000000000000001,
+        "f3": 0.15999999999999998,
+        "m1": 0.08,
+        "m3": 0.22000000000000003,
+        "pa1": 0.07142857142857142,
+        "pa3": 0.21428571428571427,
+        "h_avail": 0.943341337863205
+      },
+      {
+        "energy": 0.17475000000000002,
+        "energy_nom": 0.1743333333333334,
+        "energy_thr": 0.17600000000000002,
+        "latency": 34.95,
+        "f1": 0.12,
+        "f3": 0.26,
+        "m1": 0.08,
+        "m3": 0.24,
+        "pa1": 0.1,
+        "pa3": 0.29999999999999993,
+        "h_avail": 0.95607888652699
+      },
+      {
+        "energy": 0.1815,
+        "energy_nom": 0.1813333333333334,
+        "energy_thr": 0.182,
+        "latency": 36.3,
+        "f1": 0.2,
+        "f3": 0.4,
+        "m1": 0.2,
+        "m3": 0.42000000000000004,
+        "pa1": 0.14285714285714285,
+        "pa3": 0.42857142857142855,
+        "h_avail": 0.9489382079144761
+      },
+      {
+        "energy": 0.19275,
+        "energy_nom": 0.1933333333333334,
+        "energy_thr": 0.191,
+        "latency": 38.55,
+        "f1": 0.02,
+        "f3": 0.13999999999999999,
+        "m1": 0.04,
+        "m3": 0.15999999999999998,
+        "pa1": 0.058823529411764705,
+        "pa3": 0.17647058823529413,
+        "h_avail": 0.9391592693620691
+      },
+      {
+        "energy": 0.18475000000000003,
+        "energy_nom": 0.18466666666666673,
+        "energy_thr": 0.185,
+        "latency": 36.95,
+        "f1": 0.06000000000000001,
+        "f3": 0.3,
+        "m1": 0.06000000000000001,
+        "m3": 0.26,
+        "pa1": 0.1,
+        "pa3": 0.29999999999999993,
+        "h_avail": 0.9671528408078102
+      },
+      {
+        "energy": 0.18725,
+        "energy_nom": 0.18700000000000006,
+        "energy_thr": 0.188,
+        "latency": 37.45,
+        "f1": 0.08,
+        "f3": 0.2,
+        "m1": 0.08,
+        "m3": 0.2,
+        "pa1": 0.08333333333333334,
+        "pa3": 0.25,
+        "h_avail": 0.948898194319854
+      },
+      {
+        "energy": 0.17075,
+        "energy_nom": 0.1723333333333334,
+        "energy_thr": 0.166,
+        "latency": 34.15,
+        "f1": 0.13999999999999999,
+        "f3": 0.33999999999999997,
+        "m1": 0.12,
+        "m3": 0.38,
+        "pa1": 0.14285714285714285,
+        "pa3": 0.42857142857142855,
+        "h_avail": 0.9665832019617921
+      },
+      {
+        "energy": 0.18875000000000003,
+        "energy_nom": 0.18900000000000008,
+        "energy_thr": 0.188,
+        "latency": 37.75,
+        "f1": 0.08,
+        "f3": 0.13999999999999999,
+        "m1": 0.08,
+        "m3": 0.2,
+        "pa1": 0.07142857142857142,
+        "pa3": 0.21428571428571427,
+        "h_avail": 0.9504494924845643
+      },
+      {
+        "energy": 0.19024999999999997,
+        "energy_nom": 0.19100000000000006,
+        "energy_thr": 0.188,
+        "latency": 38.05,
+        "f1": 0.06000000000000001,
+        "f3": 0.16,
+        "m1": 0.06000000000000001,
+        "m3": 0.1,
+        "pa1": 0.06666666666666667,
+        "pa3": 0.2,
+        "h_avail": 0.9324649798681979
+      },
+      {
+        "energy": 0.18324999999999997,
+        "energy_nom": 0.18400000000000008,
+        "energy_thr": 0.181,
+        "latency": 36.65,
+        "f1": 0.08,
+        "f3": 0.2,
+        "m1": 0.12,
+        "m3": 0.18,
+        "pa1": 0.08333333333333334,
+        "pa3": 0.25,
+        "h_avail": 0.945114502799402
+      },
+      {
+        "energy": 0.18875,
+        "energy_nom": 0.1903333333333334,
+        "energy_thr": 0.184,
+        "latency": 37.75,
+        "f1": 0.06000000000000001,
+        "f3": 0.21999999999999997,
+        "m1": 0.1,
+        "m3": 0.24000000000000005,
+        "pa1": 0.0625,
+        "pa3": 0.1875,
+        "h_avail": 0.9199609031440245
+      },
+      {
+        "energy": 0.19350000000000003,
+        "energy_nom": 0.1930000000000001,
+        "energy_thr": 0.195,
+        "latency": 38.7,
+        "f1": 0.13999999999999999,
+        "f3": 0.32,
+        "m1": 0.08,
+        "m3": 0.3,
+        "pa1": 0.125,
+        "pa3": 0.375,
+        "h_avail": 0.9498772303778331
+      },
+      {
+        "energy": 0.182,
+        "energy_nom": 0.18166666666666673,
+        "energy_thr": 0.183,
+        "latency": 36.4,
+        "f1": 0.24,
+        "f3": 0.5399999999999999,
+        "m1": 0.19999999999999998,
+        "m3": 0.5,
+        "pa1": 0.16666666666666669,
+        "pa3": 0.5,
+        "h_avail": 0.979710847029373
+      },
+      {
+        "energy": 0.18375,
+        "energy_nom": 0.18600000000000008,
+        "energy_thr": 0.177,
+        "latency": 36.75,
+        "f1": 0.06000000000000001,
+        "f3": 0.2,
+        "m1": 0.08,
+        "m3": 0.24000000000000005,
+        "pa1": 0.08333333333333334,
+        "pa3": 0.25,
+        "h_avail": 0.9333674490086727
+      },
+      {
+        "energy": 0.18849999999999997,
+        "energy_nom": 0.18800000000000006,
+        "energy_thr": 0.19,
+        "latency": 37.7,
+        "f1": 0.04,
+        "f3": 0.1,
+        "m1": 0.02,
+        "m3": 0.1,
+        "pa1": 0.039999999999999994,
+        "pa3": 0.12000000000000002,
+        "h_avail": 0.9026261971007417
+      },
+      {
+        "energy": 0.19249999999999998,
+        "energy_nom": 0.1923333333333334,
+        "energy_thr": 0.193,
+        "latency": 38.5,
+        "f1": 0.06000000000000001,
+        "f3": 0.36,
+        "m1": 0.08,
+        "m3": 0.26,
+        "pa1": 0.14285714285714285,
+        "pa3": 0.42857142857142855,
+        "h_avail": 0.966575884386933
+      },
+      {
+        "energy": 0.18875000000000003,
+        "energy_nom": 0.18900000000000006,
+        "energy_thr": 0.188,
+        "latency": 37.75,
+        "f1": 0.14,
+        "f3": 0.45999999999999996,
+        "m1": 0.12,
+        "m3": 0.42000000000000004,
+        "pa1": 0.125,
+        "pa3": 0.375,
+        "h_avail": 0.9646272000612317
+      },
+      {
+        "energy": 0.18650000000000003,
+        "energy_nom": 0.18700000000000006,
+        "energy_thr": 0.185,
+        "latency": 37.3,
+        "f1": 0.16,
+        "f3": 0.43999999999999995,
+        "m1": 0.12000000000000002,
+        "m3": 0.36,
+        "pa1": 0.14285714285714285,
+        "pa3": 0.42857142857142855,
+        "h_avail": 0.9723579768392085
+      },
+      {
+        "energy": 0.183,
+        "energy_nom": 0.1823333333333334,
+        "energy_thr": 0.18499999999999997,
+        "latency": 36.6,
+        "f1": 0.1,
+        "f3": 0.36,
+        "m1": 0.16,
+        "m3": 0.42000000000000004,
+        "pa1": 0.11111111111111112,
+        "pa3": 0.33333333333333337,
+        "h_avail": 0.9456945463580549
+      },
+      {
+        "energy": 0.186,
+        "energy_nom": 0.1843333333333334,
+        "energy_thr": 0.191,
+        "latency": 37.2,
+        "f1": 0.1,
+        "f3": 0.34,
+        "m1": 0.13999999999999999,
+        "m3": 0.5,
+        "pa1": 0.125,
+        "pa3": 0.375,
+        "h_avail": 0.9533724328902519
+      },
+      {
+        "energy": 0.19150000000000003,
+        "energy_nom": 0.1913333333333334,
+        "energy_thr": 0.19200000000000003,
+        "latency": 38.3,
+        "f1": 0.1,
+        "f3": 0.26,
+        "m1": 0.04,
+        "m3": 0.24,
+        "pa1": 0.09090909090909091,
+        "pa3": 0.27272727272727265,
+        "h_avail": 0.9457691424220636
+      },
+      {
+        "energy": 0.1865,
+        "energy_nom": 0.1863333333333334,
+        "energy_thr": 0.187,
+        "latency": 37.3,
+        "f1": 0.1,
+        "f3": 0.36000000000000004,
+        "m1": 0.18,
+        "m3": 0.44000000000000006,
+        "pa1": 0.125,
+        "pa3": 0.375,
+        "h_avail": 0.9605232563160074
+      },
+      {
+        "energy": 0.19050000000000003,
+        "energy_nom": 0.19000000000000006,
+        "energy_thr": 0.192,
+        "latency": 38.1,
+        "f1": 0.06000000000000001,
+        "f3": 0.26,
+        "m1": 0.12000000000000002,
+        "m3": 0.22000000000000003,
+        "pa1": 0.09090909090909091,
+        "pa3": 0.27272727272727265,
+        "h_avail": 0.9378157189484593
+      }
+    ],
+    "NTAR-R": [
+      {
+        "energy": 0.17,
+        "energy_nom": 0.16433333333333341,
+        "energy_thr": 0.187,
+        "latency": 34.0,
+        "f1": 0.24,
+        "f3": 0.7200000000000001,
+        "m1": 0.33999999999999997,
+        "m3": 0.64,
+        "pa1": 0.28833333333333333,
+        "pa3": 0.805,
+        "h_avail": 0.7954614033290696
+      },
+      {
+        "energy": 0.16725000000000004,
+        "energy_nom": 0.1573333333333334,
+        "energy_thr": 0.197,
+        "latency": 33.45,
+        "f1": 0.0,
+        "f3": 0.0,
+        "m1": 0.0,
+        "m3": 0.0,
+        "pa1": 0.26679834054834056,
+        "pa3": 0.5903950216450217,
+        "h_avail": 0.8851287253374739
+      },
+      {
+        "energy": 0.17525000000000002,
+        "energy_nom": 0.1693333333333334,
+        "energy_thr": 0.193,
+        "latency": 35.05,
+        "f1": 0.04,
+        "f3": 0.06000000000000001,
+        "m1": 0.04,
+        "m3": 0.1,
+        "pa1": 0.2781269841269841,
+        "pa3": 0.5743809523809523,
+        "h_avail": 0.8853206117291222
+      },
+      {
+        "energy": 0.1705,
+        "energy_nom": 0.16233333333333338,
+        "energy_thr": 0.19499999999999998,
+        "latency": 34.1,
+        "f1": 0.02,
+        "f3": 0.06000000000000001,
+        "m1": 0.04,
+        "m3": 0.1,
+        "pa1": 0.27137395937395936,
+        "pa3": 0.5641218781218781,
+        "h_avail": 0.9072691413032951
+      },
+      {
+        "energy": 0.1665,
+        "energy_nom": 0.15533333333333338,
+        "energy_thr": 0.2,
+        "latency": 33.3,
+        "f1": 0.0,
+        "f3": 0.0,
+        "m1": 0.0,
+        "m3": 0.0,
+        "pa1": 0.2737676387939546,
+        "pa3": 0.6113029163818637,
+        "h_avail": 0.8956384924520044
+      },
+      {
+        "energy": 0.17300000000000001,
+        "energy_nom": 0.1656666666666667,
+        "energy_thr": 0.19499999999999998,
+        "latency": 34.6,
+        "f1": 0.08,
+        "f3": 0.30000000000000004,
+        "m1": 0.02,
+        "m3": 0.45999999999999996,
+        "pa1": 0.25633333333333336,
+        "pa3": 0.659,
+        "h_avail": 0.7875811426734234
+      },
+      {
+        "energy": 0.16625,
+        "energy_nom": 0.1600000000000001,
+        "energy_thr": 0.185,
+        "latency": 33.25,
+        "f1": 0.04,
+        "f3": 0.3,
+        "m1": 0.1,
+        "m3": 0.24,
+        "pa1": 0.22992063492063491,
+        "pa3": 0.46976190476190477,
+        "h_avail": 0.8800032945810736
+      },
+      {
+        "energy": 0.17550000000000004,
+        "energy_nom": 0.17000000000000007,
+        "energy_thr": 0.192,
+        "latency": 35.1,
+        "f1": 0.08,
+        "f3": 0.16,
+        "m1": 0.1,
+        "m3": 0.2,
+        "pa1": 0.25983710733710735,
+        "pa3": 0.5295113220113221,
+        "h_avail": 0.9193213890668783
+      },
+      {
+        "energy": 0.16199999999999998,
+        "energy_nom": 0.15500000000000008,
+        "energy_thr": 0.18300000000000002,
+        "latency": 32.4,
+        "f1": 0.04,
+        "f3": 0.12000000000000002,
+        "m1": 0.04,
+        "m3": 0.14,
+        "pa1": 0.3022539682539682,
+        "pa3": 0.6467619047619048,
+        "h_avail": 0.9188231982151333
+      },
+      {
+        "energy": 0.166,
+        "energy_nom": 0.15700000000000008,
+        "energy_thr": 0.193,
+        "latency": 33.2,
+        "f1": 0.0,
+        "f3": 0.2,
+        "m1": 0.06000000000000001,
+        "m3": 0.28,
+        "pa1": 0.300047619047619,
+        "pa3": 0.7001428571428571,
+        "h_avail": 0.822278802494828
+      },
+      {
+        "energy": 0.17725000000000002,
+        "energy_nom": 0.17100000000000007,
+        "energy_thr": 0.19600000000000004,
+        "latency": 35.45,
+        "f1": 0.0,
+        "f3": 0.04,
+        "m1": 0.02,
+        "m3": 0.06000000000000001,
+        "pa1": 0.2727546864899806,
+        "pa3": 0.5682640594699419,
+        "h_avail": 0.9107888843166654
+      },
+      {
+        "energy": 0.1685,
+        "energy_nom": 0.1620000000000001,
+        "energy_thr": 0.188,
+        "latency": 33.7,
+        "f1": 0.08,
+        "f3": 0.14,
+        "m1": 0.06000000000000001,
+        "m3": 0.15999999999999998,
+        "pa1": 0.22657142857142856,
+        "pa3": 0.4597142857142857,
+        "h_avail": 0.8900129141345922
+      },
+      {
+        "energy": 0.1735,
+        "energy_nom": 0.16866666666666674,
+        "energy_thr": 0.188,
+        "latency": 34.7,
+        "f1": 0.08,
+        "f3": 0.18,
+        "m1": 0.04,
+        "m3": 0.18,
+        "pa1": 0.22781313131313136,
+        "pa3": 0.44343939393939386,
+        "h_avail": 0.9183335548933458
+      },
+      {
+        "energy": 0.15925,
+        "energy_nom": 0.15333333333333338,
+        "energy_thr": 0.177,
+        "latency": 31.85,
+        "f1": 0.06000000000000001,
+        "f3": 0.3,
+        "m1": 0.14,
+        "m3": 0.36,
+        "pa1": 0.28014285714285714,
+        "pa3": 0.6104285714285714,
+        "h_avail": 0.9181693334691505
+      },
+      {
+        "energy": 0.17550000000000004,
+        "energy_nom": 0.1683333333333334,
+        "energy_thr": 0.19699999999999998,
+        "latency": 35.1,
+        "f1": 0.0,
+        "f3": 0.06000000000000001,
+        "m1": 0.02,
+        "m3": 0.06000000000000001,
+        "pa1": 0.2656502941502942,
+        "pa3": 0.5469508824508825,
+        "h_avail": 0.9207668270515603
+      },
+      {
+        "energy": 0.177,
+        "energy_nom": 0.17166666666666672,
+        "energy_thr": 0.193,
+        "latency": 35.4,
+        "f1": 0.02,
+        "f3": 0.08,
+        "m1": 0.02,
+        "m3": 0.1,
+        "pa1": 0.25947996447996446,
+        "pa3": 0.5284398934398935,
+        "h_avail": 0.9249435932312238
+      },
+      {
+        "energy": 0.16725000000000004,
+        "energy_nom": 0.15900000000000009,
+        "energy_thr": 0.192,
+        "latency": 33.45,
+        "f1": 0.0,
+        "f3": 0.1,
+        "m1": 0.04,
+        "m3": 0.08,
+        "pa1": 0.27083405483405476,
+        "pa3": 0.5625021645021644,
+        "h_avail": 0.8932063570113883
+      },
+      {
+        "energy": 0.17025,
+        "energy_nom": 0.1613333333333334,
+        "energy_thr": 0.19699999999999998,
+        "latency": 34.05,
+        "f1": 0.02,
+        "f3": 0.04,
+        "m1": 0.0,
+        "m3": 0.02,
+        "pa1": 0.27603205128205127,
+        "pa3": 0.5780961538461539,
+        "h_avail": 0.886909477167484
+      },
+      {
+        "energy": 0.17425000000000002,
+        "energy_nom": 0.1676666666666667,
+        "energy_thr": 0.194,
+        "latency": 34.85,
+        "f1": 0.12,
+        "f3": 0.18,
+        "m1": 0.04,
+        "m3": 0.2,
+        "pa1": 0.23507142857142854,
+        "pa3": 0.6052142857142858,
+        "h_avail": 0.7830859737362824
+      },
+      {
+        "energy": 0.16550000000000004,
+        "energy_nom": 0.15866666666666673,
+        "energy_thr": 0.186,
+        "latency": 33.1,
+        "f1": 0.06000000000000001,
+        "f3": 0.36,
+        "m1": 0.12000000000000002,
+        "m3": 0.4600000000000001,
+        "pa1": 0.25266666666666665,
+        "pa3": 0.6779999999999999,
+        "h_avail": 0.8449320212589895
+      },
+      {
+        "energy": 0.16825,
+        "energy_nom": 0.1630000000000001,
+        "energy_thr": 0.184,
+        "latency": 33.65,
+        "f1": 0.08,
+        "f3": 0.16,
+        "m1": 0.08,
+        "m3": 0.18,
+        "pa1": 0.2343874458874459,
+        "pa3": 0.4731623376623377,
+        "h_avail": 0.9134773552154144
+      },
+      {
+        "energy": 0.17300000000000001,
+        "energy_nom": 0.1640000000000001,
+        "energy_thr": 0.2,
+        "latency": 34.6,
+        "f1": 0.0,
+        "f3": 0.0,
+        "m1": 0.0,
+        "m3": 0.0,
+        "pa1": 0.10257289932289933,
+        "pa3": 0.30771869796869794,
+        "h_avail": 0.9182525558733647
+      },
+      {
+        "energy": 0.17350000000000002,
+        "energy_nom": 0.16566666666666674,
+        "energy_thr": 0.19699999999999998,
+        "latency": 34.7,
+        "f1": 0.06000000000000001,
+        "f3": 0.22000000000000003,
+        "m1": 0.1,
+        "m3": 0.26,
+        "pa1": 0.23199999999999998,
+        "pa3": 0.5960000000000001,
+        "h_avail": 0.782413060129665
+      },
+      {
+        "energy": 0.16850000000000004,
+        "energy_nom": 0.16133333333333338,
+        "energy_thr": 0.19000000000000003,
+        "latency": 33.7,
+        "f1": 0.02,
+        "f3": 0.24000000000000005,
+        "m1": 0.04,
+        "m3": 0.26,
+        "pa1": 0.2128571428571428,
+        "pa3": 0.5485714285714286,
+        "h_avail": 0.8394760783234136
+      },
+      {
+        "energy": 0.16700000000000004,
+        "energy_nom": 0.15966666666666676,
+        "energy_thr": 0.189,
+        "latency": 33.4,
+        "f1": 0.04,
+        "f3": 0.24,
+        "m1": 0.08,
+        "m3": 0.4,
+        "pa1": 0.2611904761904762,
+        "pa3": 0.6335714285714286,
+        "h_avail": 0.8388212281196372
+      },
+      {
+        "energy": 0.16699999999999998,
+        "energy_nom": 0.1610000000000001,
+        "energy_thr": 0.185,
+        "latency": 33.4,
+        "f1": 0.04,
+        "f3": 0.2,
+        "m1": 0.08,
+        "m3": 0.2,
+        "pa1": 0.1958650793650794,
+        "pa3": 0.45759523809523805,
+        "h_avail": 0.8907415852981927
+      },
+      {
+        "energy": 0.16925000000000004,
+        "energy_nom": 0.1620000000000001,
+        "energy_thr": 0.191,
+        "latency": 33.85,
+        "f1": 0.0,
+        "f3": 0.22000000000000003,
+        "m1": 0.04,
+        "m3": 0.22000000000000003,
+        "pa1": 0.20657142857142857,
+        "pa3": 0.5697142857142857,
+        "h_avail": 0.8482036919738724
+      },
+      {
+        "energy": 0.17475000000000002,
+        "energy_nom": 0.1683333333333334,
+        "energy_thr": 0.194,
+        "latency": 34.95,
+        "f1": 0.06000000000000001,
+        "f3": 0.08,
+        "m1": 0.12,
+        "m3": 0.18,
+        "pa1": 0.19637734487734487,
+        "pa3": 0.4091320346320346,
+        "h_avail": 0.8832917820301756
+      },
+      {
+        "energy": 0.16925000000000004,
+        "energy_nom": 0.1620000000000001,
+        "energy_thr": 0.191,
+        "latency": 33.85,
+        "f1": 0.0,
+        "f3": 0.27999999999999997,
+        "m1": 0.12000000000000002,
+        "m3": 0.31999999999999995,
+        "pa1": 0.24145238095238097,
+        "pa3": 0.5943571428571428,
+        "h_avail": 0.8491649334836886
+      },
+      {
+        "energy": 0.17475000000000002,
+        "energy_nom": 0.1690000000000001,
+        "energy_thr": 0.192,
+        "latency": 34.95,
+        "f1": 0.1,
+        "f3": 0.18000000000000002,
+        "m1": 0.08,
+        "m3": 0.2,
+        "pa1": 0.2558066378066378,
+        "pa3": 0.48741991341991336,
+        "h_avail": 0.878788222203274
+      }
+    ],
+    "Energy-Matched Random": [
+      {
+        "energy": 0.17075,
+        "energy_nom": 0.17166666666666672,
+        "energy_thr": 0.16799999999999998,
+        "latency": 34.15,
+        "f1": 0.58,
+        "f3": 0.8,
+        "m1": 0.5399999999999999,
+        "m3": 0.8400000000000001,
+        "pa1": 0.6120000385882346,
+        "pa3": 0.8706666795294116,
+        "h_avail": 0.7924848132203695
+      },
+      {
+        "energy": 0.16525000000000004,
+        "energy_nom": 0.1650000000000001,
+        "energy_thr": 0.16599999999999998,
+        "latency": 33.05,
+        "f1": 0.13999999999999999,
+        "f3": 0.36,
+        "m1": 0.12,
+        "m3": 0.32,
+        "pa1": 0.1326973186183173,
+        "pa3": 0.3980919558549518,
+        "h_avail": 0.8067954043684077
+      },
+      {
+        "energy": 0.18025000000000002,
+        "energy_nom": 0.18100000000000005,
+        "energy_thr": 0.178,
+        "latency": 36.05,
+        "f1": 0.13999999999999999,
+        "f3": 0.41999999999999993,
+        "m1": 0.13999999999999999,
+        "m3": 0.38,
+        "pa1": 0.25628142733571285,
+        "pa3": 0.5667225374857117,
+        "h_avail": 0.8809962363262274
+      },
+      {
+        "energy": 0.16724999999999998,
+        "energy_nom": 0.1660000000000001,
+        "energy_thr": 0.171,
+        "latency": 33.45,
+        "f1": 0.08,
+        "f3": 0.36,
+        "m1": 0.08,
+        "m3": 0.36000000000000004,
+        "pa1": 0.16357805623131916,
+        "pa3": 0.4907341686939574,
+        "h_avail": 0.8251921862277378
+      },
+      {
+        "energy": 0.16750000000000004,
+        "energy_nom": 0.1663333333333334,
+        "energy_thr": 0.17099999999999999,
+        "latency": 33.5,
+        "f1": 0.14,
+        "f3": 0.3,
+        "m1": 0.1,
+        "m3": 0.2,
+        "pa1": 0.11432130097804591,
+        "pa3": 0.34296390293413775,
+        "h_avail": 0.8418140277216477
+      },
+      {
+        "energy": 0.177,
+        "energy_nom": 0.1773333333333334,
+        "energy_thr": 0.17600000000000002,
+        "latency": 35.4,
+        "f1": 0.45999999999999996,
+        "f3": 0.64,
+        "m1": 0.38,
+        "m3": 0.6799999999999999,
+        "pa1": 0.486228854155225,
+        "pa3": 0.691737312493135,
+        "h_avail": 0.8336307966242146
+      },
+      {
+        "energy": 0.16550000000000004,
+        "energy_nom": 0.16266666666666674,
+        "energy_thr": 0.17400000000000002,
+        "latency": 33.1,
+        "f1": 0.12000000000000002,
+        "f3": 0.4800000000000001,
+        "m1": 0.2,
+        "m3": 0.5,
+        "pa1": 0.23430322723847113,
+        "pa3": 0.7029096817154132,
+        "h_avail": 0.838903103314126
+      },
+      {
+        "energy": 0.17425000000000002,
+        "energy_nom": 0.1743333333333334,
+        "energy_thr": 0.17400000000000002,
+        "latency": 34.85,
+        "f1": 0.12,
+        "f3": 0.33999999999999997,
+        "m1": 0.16,
+        "m3": 0.4,
+        "pa1": 0.18780688730145,
+        "pa3": 0.56342066190435,
+        "h_avail": 0.8472835122531397
+      },
+      {
+        "energy": 0.15725000000000003,
+        "energy_nom": 0.15766666666666676,
+        "energy_thr": 0.15600000000000003,
+        "latency": 31.45,
+        "f1": 0.2,
+        "f3": 0.5599999999999999,
+        "m1": 0.13999999999999999,
+        "m3": 0.48,
+        "pa1": 0.16510791835004252,
+        "pa3": 0.49532375505012755,
+        "h_avail": 0.8319713019597057
+      },
+      {
+        "energy": 0.16725,
+        "energy_nom": 0.1676666666666667,
+        "energy_thr": 0.16599999999999998,
+        "latency": 33.45,
+        "f1": 0.34,
+        "f3": 0.74,
+        "m1": 0.3,
+        "m3": 0.7200000000000001,
+        "pa1": 0.32715611246263837,
+        "pa3": 0.7234497799402214,
+        "h_avail": 0.7941528234971272
+      },
+      {
+        "energy": 0.17550000000000002,
+        "energy_nom": 0.17566666666666672,
+        "energy_thr": 0.175,
+        "latency": 35.1,
+        "f1": 0.12,
+        "f3": 0.36,
+        "m1": 0.16,
+        "m3": 0.41999999999999993,
+        "pa1": 0.1678245107993566,
+        "pa3": 0.5034735323980699,
+        "h_avail": 0.8297228099560096
+      },
+      {
+        "energy": 0.16650000000000004,
+        "energy_nom": 0.1653333333333334,
+        "energy_thr": 0.17,
+        "latency": 33.3,
+        "f1": 0.22000000000000003,
+        "f3": 0.5199999999999999,
+        "m1": 0.22000000000000003,
+        "m3": 0.5199999999999999,
+        "pa1": 0.2232490392187659,
+        "pa3": 0.6697471176562978,
+        "h_avail": 0.8297519603438571
+      },
+      {
+        "energy": 0.1705,
+        "energy_nom": 0.16866666666666671,
+        "energy_thr": 0.17600000000000002,
+        "latency": 34.1,
+        "f1": 0.16,
+        "f3": 0.4,
+        "m1": 0.2,
+        "m3": 0.4,
+        "pa1": 0.20400001286274483,
+        "pa3": 0.6120000385882346,
+        "h_avail": 0.8388375355613901
+      },
+      {
+        "energy": 0.15900000000000003,
+        "energy_nom": 0.15900000000000006,
+        "energy_thr": 0.159,
+        "latency": 31.8,
+        "f1": 0.18,
+        "f3": 0.62,
+        "m1": 0.16,
+        "m3": 0.5399999999999999,
+        "pa1": 0.2157969018358851,
+        "pa3": 0.6473907055076553,
+        "h_avail": 0.8964111289898306
+      },
+      {
+        "energy": 0.17050000000000004,
+        "energy_nom": 0.1690000000000001,
+        "energy_thr": 0.175,
+        "latency": 34.1,
+        "f1": 0.12,
+        "f3": 0.4,
+        "m1": 0.12000000000000002,
+        "m3": 0.34,
+        "pa1": 0.18780688730145004,
+        "pa3": 0.56342066190435,
+        "h_avail": 0.7892489252672978
+      },
+      {
+        "energy": 0.17350000000000002,
+        "energy_nom": 0.17466666666666672,
+        "energy_thr": 0.17,
+        "latency": 34.7,
+        "f1": 0.18,
+        "f3": 0.45999999999999996,
+        "m1": 0.12000000000000002,
+        "m3": 0.36000000000000004,
+        "pa1": 0.18063755772099138,
+        "pa3": 0.5419126731629742,
+        "h_avail": 0.8316844450053669
+      },
+      {
+        "energy": 0.1635,
+        "energy_nom": 0.16133333333333338,
+        "energy_thr": 0.17,
+        "latency": 32.7,
+        "f1": 0.16,
+        "f3": 0.44000000000000006,
+        "m1": 0.12,
+        "m3": 0.43999999999999995,
+        "pa1": 0.1757274204288533,
+        "pa3": 0.52718226128656,
+        "h_avail": 0.8025867237381565
+      },
+      {
+        "energy": 0.16949999999999998,
+        "energy_nom": 0.16866666666666671,
+        "energy_thr": 0.17200000000000001,
+        "latency": 33.9,
+        "f1": 0.12000000000000002,
+        "f3": 0.41999999999999993,
+        "m1": 0.1,
+        "m3": 0.38,
+        "pa1": 0.15300000964705857,
+        "pa3": 0.45900002894117586,
+        "h_avail": 0.8278888059347154
+      },
+      {
+        "energy": 0.1825,
+        "energy_nom": 0.18200000000000005,
+        "energy_thr": 0.18400000000000002,
+        "latency": 36.5,
+        "f1": 0.3,
+        "f3": 0.52,
+        "m1": 0.26000000000000006,
+        "m3": 0.4600000000000001,
+        "pa1": 0.40333923067251726,
+        "pa3": 0.5738137361946551,
+        "h_avail": 0.8777817224148696
+      },
+      {
+        "energy": 0.16375,
+        "energy_nom": 0.1643333333333334,
+        "energy_thr": 0.162,
+        "latency": 32.75,
+        "f1": 0.38,
+        "f3": 0.7799999999999999,
+        "m1": 0.4,
+        "m3": 0.8,
+        "pa1": 0.3514548408577066,
+        "pa3": 0.77718226128656,
+        "h_avail": 0.785411848590631
+      },
+      {
+        "energy": 0.16850000000000004,
+        "energy_nom": 0.1663333333333334,
+        "energy_thr": 0.175,
+        "latency": 33.7,
+        "f1": 0.06000000000000001,
+        "f3": 0.4000000000000001,
+        "m1": 0.1,
+        "m3": 0.32,
+        "pa1": 0.1757274204288533,
+        "pa3": 0.52718226128656,
+        "h_avail": 0.8711673555168454
+      },
+      {
+        "energy": 0.16875,
+        "energy_nom": 0.1683333333333334,
+        "energy_thr": 0.17,
+        "latency": 33.75,
+        "f1": 0.06,
+        "f3": 0.16,
+        "m1": 0.04,
+        "m3": 0.13999999999999999,
+        "pa1": 0.09984773328353551,
+        "pa3": 0.29954319985060657,
+        "h_avail": 0.7915390706795421
+      },
+      {
+        "energy": 0.17750000000000002,
+        "energy_nom": 0.17866666666666672,
+        "energy_thr": 0.17400000000000002,
+        "latency": 35.5,
+        "f1": 0.42000000000000004,
+        "f3": 0.6599999999999999,
+        "m1": 0.36,
+        "m3": 0.64,
+        "pa1": 0.4409222302612714,
+        "pa3": 0.6272814868408476,
+        "h_avail": 0.8101020862152939
+      },
+      {
+        "energy": 0.169,
+        "energy_nom": 0.16900000000000007,
+        "energy_thr": 0.16899999999999998,
+        "latency": 33.8,
+        "f1": 0.24,
+        "f3": 0.6399999999999999,
+        "m1": 0.22000000000000003,
+        "m3": 0.6,
+        "pa1": 0.3060000192941173,
+        "pa3": 0.6766666988235287,
+        "h_avail": 0.8091485682870895
+      },
+      {
+        "energy": 0.16750000000000004,
+        "energy_nom": 0.16766666666666674,
+        "energy_thr": 0.16699999999999998,
+        "latency": 33.5,
+        "f1": 0.26,
+        "f3": 0.7200000000000001,
+        "m1": 0.36,
+        "m3": 0.6199999999999999,
+        "pa1": 0.3271561124626383,
+        "pa3": 0.7234497799402213,
+        "h_avail": 0.80967603398747
+      },
+      {
+        "energy": 0.16675,
+        "energy_nom": 0.16433333333333341,
+        "energy_thr": 0.174,
+        "latency": 33.35,
+        "f1": 0.12000000000000002,
+        "f3": 0.41999999999999993,
+        "m1": 0.13999999999999999,
+        "m3": 0.41999999999999993,
+        "pa1": 0.23430322723847113,
+        "pa3": 0.7029096817154132,
+        "h_avail": 0.8516085610350406
+      },
+      {
+        "energy": 0.17,
+        "energy_nom": 0.17200000000000001,
+        "energy_thr": 0.16399999999999998,
+        "latency": 34.0,
+        "f1": 0.32,
+        "f3": 0.78,
+        "m1": 0.24,
+        "m3": 0.6799999999999999,
+        "pa1": 0.3060000192941173,
+        "pa3": 0.6766666988235287,
+        "h_avail": 0.817818053849221
+      },
+      {
+        "energy": 0.17375000000000002,
+        "energy_nom": 0.1743333333333334,
+        "energy_thr": 0.172,
+        "latency": 34.75,
+        "f1": 0.16,
+        "f3": 0.58,
+        "m1": 0.22000000000000003,
+        "m3": 0.48,
+        "pa1": 0.25628142733571285,
+        "pa3": 0.5667225374857117,
+        "h_avail": 0.811949989316356
+      },
+      {
+        "energy": 0.16975,
+        "energy_nom": 0.1713333333333334,
+        "energy_thr": 0.165,
+        "latency": 33.95,
+        "f1": 0.34,
+        "f3": 0.78,
+        "m1": 0.3,
+        "m3": 0.68,
+        "pa1": 0.3060000192941173,
+        "pa3": 0.6766666988235287,
+        "h_avail": 0.8115023878377722
+      },
+      {
+        "energy": 0.17525000000000002,
+        "energy_nom": 0.1753333333333334,
+        "energy_thr": 0.175,
+        "latency": 35.05,
+        "f1": 0.26000000000000006,
+        "f3": 0.48,
+        "m1": 0.16,
+        "m3": 0.52,
+        "pa1": 0.2562814273357129,
+        "pa3": 0.5667225374857117,
+        "h_avail": 0.8450259913937364
+      }
+    ]
+  },
+  "interpretation_note": "A lower policy-aware hit rate is better, but a match on training energy does not guarantee exact matching on new networks. If held-out energy differs materially, do not retune using the held-out set."
+}
