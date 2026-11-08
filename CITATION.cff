@@ -14,6 +14,11 @@ authors:
   - family-names: Alkoffash
     given-names: Mahmud S.
     affiliation: "Al-Balqa Applied University"
+  - family-names: Aljarrah
+    given-names: Heba Atta Rasheed
+    affiliation: "Ajloun National University"
+version: "1.1"
+date-released: "2026-11-08"
 license: MIT
 preferred-citation:
   type: article
@@ -27,5 +32,7 @@ preferred-citation:
       given-names: Saed
     - family-names: Alkoffash
       given-names: Mahmud S.
+    - family-names: Aljarrah
+      given-names: Heba Atta Rasheed
   year: 2026
   notes: "Manuscript under review."
