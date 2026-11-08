@@ -1,4 +1,4 @@
-"""Figures for the revised NTAR manuscript, all drawn from results/results.json."""
+"""Figures for the NTAR manuscript, all drawn from results/results.json."""
 import json
 import os
 import sys

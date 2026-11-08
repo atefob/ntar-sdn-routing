@@ -1,6 +1,6 @@
-"""LaTeX tables for the revised NTAR manuscript, generated from results/results.json
-(ntar_sim.py) and results/results2.json (experiments2.py), so that no number is
-transcribed by hand. Writes results/tables.tex; each table is preceded by a marker comment
+"""LaTeX tables for the NTAR manuscript, generated from the JSON files in results/, so that no
+number is transcribed by hand. Tables 1-6 and 9 are built here; Tables 7, 8 and 10 are built
+by supplementary_tables.py. Writes results/tables.tex; each table is preceded by a marker comment
 '% ---------------- TABLE <n> ----------------'."""
 import json
 import math
@@ -171,35 +171,6 @@ table(6, "table*",
       r"Threat signal & Nominal energy (J) & Freq.\ top-1 & Markov top-1 & Nominal energy (J) & Freq.\ top-1 & Markov top-1 & Policy-aware top-1 \\",
       rows)
 
-# ---------------------------------------------------------------- Table 7: decoupled costs
-D = R2["decoupled"]
-rows = []
-for model, nm in (("indep", "Independent"), ("anti", "Anti-correlated")):
-    for k, mn in (("random", "Random"), ("fixed", "Fixed-Weight"), ("ntar", "NTAR"), ("ntar_r0.1", r"NTAR-R")):
-        v = D[model]["rand30"][k]
-        rows.append(f"{nm if k == 'random' else ''} & {mn} & {ci(v['energy'], 3)} & {ci(v['latency'], 1)} & "
-                    f"{ci(v['f1'], 2)} & {ci(v['m1'], 2)} & {ci(v['pa1'], 2)} \\\\")
-    if model == "indep":
-        rows.append(r"\midrule")
-table(7, "table*",
-      r"Decoupled energy and latency (30 random topologies, 10-step threat window, 3 link-cost draws per topology; mean $\pm$ 95\% CI across topologies). "
-      r"Independent: per-link energy $\sim U(0.02,0.08)$~J and latency $\sim U(4,16)$~ms drawn independently. "
-      r"Anti-correlated: latency $=20-200\,e+\mathcal{N}(0,0.5)$~ms, so low-energy links are slow.",
-      "tab:decoupled", "llccccc",
-      r"Cost model & Method & Energy (J) & Latency (ms) & Freq.\ top-1 & Markov top-1 & Policy-aware top-1 \\",
-      rows)
-
-# ---------------------------------------------------------------- Table 8: scalability
-rows = []
-for s in R2["scalability"]:
-    rows.append(f"{s['n']} & {s['degree']:.1f} & {ci(s['candidates'], 1)} & {ci(s['ms_enum'], 2)} & {ci(s['ms_yen16'], 2)} \\\\")
-table(8, "table",
-      r"Per-decision cost of the candidate search (Python/NetworkX, one CPU core; 5 graphs per row, source and destination three hops apart, "
-      r"mean $\pm$ 95\% CI). Enumeration lists all simple paths of at most four hops; Yen lists the 16 shortest simple paths.",
-      "tab:scale", "ccccc",
-      r"$|V|$ & Mean degree & Candidates & Enumeration (ms) & Yen, $k=16$ (ms) \\",
-      rows, width="\\columnwidth")
-
 # ---------------------------------------------------------------- Table 9: truncated candidate sets
 R3 = json.load(open("results/results3.json"))
 GEN = [("full_enum", "All paths $\\le$4 hops, DFS order"), ("full_yen", "All paths $\\le$4 hops, Yen order"),
@@ -222,6 +193,6 @@ table(9, "table*",
 open("results/tables.tex", "w").write("\n".join(out))
 print("wrote", len(out), "tables")
 
-# Generate corrected Tables 7, 8, and new Table 10
-from revision_tables import apply_revision_tables
-apply_revision_tables()
+# Tables 7, 8 and 10
+from supplementary_tables import add_supplementary_tables
+add_supplementary_tables()

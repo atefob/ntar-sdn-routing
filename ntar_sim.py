@@ -1,5 +1,5 @@
 """
-NTAR: single-source simulator for every table and figure in the revised manuscript.
+NTAR: simulator for the main experiments of the NTAR manuscript (Tables 1-4, Figs. 2-3).
 
 The routing engine reproduces the authors' original baseline script
 (code_com_baseline) step for step: same topology, same candidate-path order,
@@ -7,7 +7,7 @@ same tie-breaking (first minimum in networkx enumeration order), same RNG call
 order and the same uniform cost noise. With --check it verifies that the
 20-run benchmark matches the original script's Table 2 to four decimals.
 
-On top of that engine it adds what the revision needs: the available-path
+On top of that engine it adds the available-path
 entropy, a passive-adversary hit rate, the four-way cost-form ablation, a
 threat-weight sweep and 30 random topologies.
 

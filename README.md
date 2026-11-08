@@ -20,10 +20,10 @@ bash run_all.sh
 `run_all.sh` takes about two minutes on a laptop and writes:
 
 - `results/results.json`: main experiments (Tables 1–4).
-- `results/results2.json`: extended experiments (Tables 5–8).
+- `results/results2.json`: adversary, threat-signal and baseline experiments (Tables 5–6).
 - `results/results3.json`: candidate-generator experiment (Table 9).
-- `results/table7_revision.json`: decoupled link costs with independent cost draws (Table 7).
-- `results/table8_revision.json`: hop-limit-matched candidate-generation timing (Table 8).
+- `results/table7_decoupled.json`: decoupled link costs with independent cost draws (Table 7).
+- `results/table8_timing.json`: hop-limit-matched candidate-generation timing (Table 8).
 - `results/energy_matched_baseline.json`: held-out energy-matched stochastic baseline (Table 10).
 - `results/ntar_state_tie_audit.json`: cost-tie audit of the representative run (Section 4.1).
 - `results/tables.tex`: all ten tables as LaTeX, generated from the JSON files.
@@ -34,13 +34,13 @@ bash run_all.sh
 | File | Purpose |
 |---|---|
 | `ntar_sim.py` | Main simulator. Its routing engine reproduces the original baseline script step for step. It generates the representative run, the benchmark, the cost-form ablation, the threat-weight sweep and the generalization study. Use `--check` to verify the benchmark against the published Table 2. |
-| `experiments2.py` | Extended experiments: NTAR-R, frequency/Markov/policy-aware adversaries, periodic MTD baselines, imperfect threat signals, decoupled energy/latency costs, computational scaling, topology-level statistics, and the Proposition 1 counterexample. |
+| `experiments2.py` | NTAR-R, frequency/Markov/policy-aware adversaries, periodic MTD baselines, imperfect threat signals, topology-level statistics, and the Proposition 1 counterexample (Tables 5–6, Fig. 4). It also defines the link-cost models used by `table7_decoupled.py`. |
 | `experiments3.py` | Candidate-generator experiment: full four-hop enumeration vs. Yen's algorithm with k = 16 and k = 8. |
-| `table7_revision.py` | Table 7: three independent link-cost draws per topology, five routing seeds per draw. |
-| `table8_revision.py` | Table 8: DFS, complete Yen and Yen-16 under the same four-hop bound (timing). |
+| `table7_decoupled.py` | Table 7: three independent link-cost draws per topology, five routing seeds per draw. |
+| `table8_timing.py` | Table 8: DFS, complete Yen and Yen-16 under the same four-hop bound (timing). |
 | `energy_matched_baseline.py` | Table 10: Gibbs baseline calibrated to NTAR-R's energy on 30 training topologies and tested on 30 held-out topologies. |
 | `ntar_state_tie_audit.py` | Lists the exact cost ties at each step of the representative run and checks the original and extended engines against each other. |
-| `make_tables.py` | Builds `results/tables.tex` from the JSON results, so no number is transcribed by hand. It calls `revision_tables.py` for Tables 7, 8 and 10. |
+| `make_tables.py` | Builds `results/tables.tex` from the JSON results, so no number is transcribed by hand. It calls `supplementary_tables.py` for Tables 7, 8 and 10. |
 | `verify_manuscript_numbers.py` | Checks every number in Tables 7, 8 and 10 of the manuscript `.tex` against the JSON results. |
 | `make_figures.py` | Builds Figs. 2–4 from the JSON results. |
 | `original/code_com_baseline.py` | The authors' original baseline script, kept for reference. |
@@ -65,10 +65,10 @@ where *rep(p)* is how often *p* was used before. The weights are (0.4, 0.4, 0.2)
 
 ```bash
 python ntar_sim.py --out results --check   # Tables 1-4, verifies Table 2 of the original script
-python experiments2.py --out results       # Tables 5-8
+python experiments2.py --out results       # Tables 5-6
 python experiments3.py --out results       # Table 9
-python table7_revision.py                  # Table 7
-python table8_revision.py                  # Table 8 (timings depend on the machine)
+python table7_decoupled.py                  # Table 7
+python table8_timing.py                  # Table 8 (timings depend on the machine)
 python energy_matched_baseline.py          # Table 10
 python ntar_state_tie_audit.py             # tie audit
 python make_tables.py                      # results/tables.tex
@@ -91,7 +91,7 @@ Python 3.10 or newer, with NetworkX, NumPy, SciPy and Matplotlib (see `requireme
 
 The candidate order, and therefore tie-breaking, depends on NetworkX's path enumeration. Pin the NetworkX version if you need bit-identical path sequences.
 
-The `results/` folder holds the exact output used in the paper. Rerunning `run_all.sh` reproduces every simulated number exactly. The only values that change between runs are the wall-clock timings in Table 8, which depend on the machine and its load; `run_all.sh` therefore keeps the published timings unless you uncomment the `table8_revision.py` line.
+The `results/` folder holds the exact output used in the paper. Rerunning `run_all.sh` reproduces every simulated number exactly. The only values that change between runs are the wall-clock timings in Table 8, which depend on the machine and its load; `run_all.sh` therefore keeps the published timings unless you uncomment the `table8_timing.py` line.
 
 ## Citation
 

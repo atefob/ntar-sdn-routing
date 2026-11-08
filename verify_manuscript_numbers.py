@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
-"""Compare revised NTAR LaTeX Tables 7, 8, 10 with machine-generated JSON.
+"""Compare NTAR LaTeX Tables 7, 8, 10 with machine-generated JSON.
 
-Example (run in the original simulation repository):
+Example (run in the repository root):
  python verify_manuscript_numbers.py --tex path/to/ntar_frontiers.tex --results results
 
-Only checks numeric values that are displayed in the three revised tables.
+Only checks numeric values that are displayed in these three tables.
 No simulation or manuscript files are changed.
 """
 from __future__ import annotations
@@ -121,7 +121,7 @@ def main():
     parser.add_argument('--results',type=Path,default=Path('results'))
     args=parser.parse_args()
     tex=args.tex.read_text(encoding='utf-8')
-    filenames=['table7_revision.json','table8_revision.json','energy_matched_baseline.json']
+    filenames=['table7_decoupled.json','table8_timing.json','energy_matched_baseline.json']
     missing=[f for f in filenames if not (args.results/f).is_file()]
     if missing:
         sys.exit('MISSING JSON files under '+str(args.results)+': '+', '.join(missing))
@@ -132,6 +132,6 @@ def main():
         print(f'FAILED: {len(ERRORS)} discrepancies:')
         for issue in ERRORS: print(' -',issue)
         sys.exit(1)
-    print('PASS: All revised-table values agree with source JSON to the stated manuscript rounding.')
+    print('PASS: All Table 7, 8 and 10 values agree with source JSON to the stated manuscript rounding.')
 
 if __name__=='__main__': main()

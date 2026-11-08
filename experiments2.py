@@ -1,5 +1,5 @@
 """
-Second-round experiments for the NTAR revision (responses to the external review).
+Adversary, signal and baseline experiments for the NTAR manuscript (Tables 5, 6 and Figs. 3-4).
 
 Uses a general engine that shares NTAR's cost function, candidate generation and
 tie-breaking with ntar_sim.py, and adds:
@@ -7,9 +7,8 @@ tie-breaking with ntar_sim.py, and adds:
   E2  three adversaries (frequency, first-order Markov, policy-aware) + top-k hit rate,
       threat windows of 5, 10 and 20 steps
   E3  imperfect threat signal: false alarms, missed detections, detection delay, flapping
-  E4  decoupled per-link energy and latency (independent and anti-correlated)
+  E4  per-link energy and latency models used by table7_decoupled.py
   E5  periodic MTD baseline (threat-independent route mutation every M steps)
-  E6  scalability: candidate-set size and per-decision time on 50/100/200-node graphs
   E7  topology-level paired statistics (95% CI, Wilcoxon signed-rank)
   E8  counterexample to an unconditional reading of Proposition 1 (small rho)
 
@@ -346,31 +345,6 @@ def main(out):
         sig[name] = summarize_set(rr)
     R["signal"] = sig
 
-    # ---- E4: decoupled energy/latency (6-node with 20 link-cost draws, and 30 topologies)
-    dec = {}
-    for model in ("indep", "anti"):
-        rows = defaultdict(list)
-        topos6 = [six] * 20     # 20 independent link-cost draws on the 6-node graph
-        r6 = run_set(topos6, 40, 15, 10, [0], meth + [("random", {})], model=model)
-        rr = run_set(rand30, 40, 15, 10, range(3), meth + [("random", {})], model=model)
-        dec[model] = dict(six=summarize_set(r6), rand30=summarize_set(rr))
-        # independent effect of w1 vs w2 with w1+w2 fixed: does the selected path change?
-        changed, tot = 0, 0
-        e_sh, l_sh = [], []
-        for k, tp in enumerate(rand30):
-            eng = Engine(tp["g"], tp["src"], tp["dst"], tp["fail"], model, cost_seed=k)
-            cands = S.candidates(tp["g"], tp["src"], tp["dst"])
-            pick = lambda w: min(eng.ranked(cands, w, {}))[2]
-            pe, pl = pick((0.7, 0.1, 0.2)), pick((0.1, 0.7, 0.2))
-            tot += 1
-            changed += int(pe != pl)
-            ee1, ll1 = path_cost_terms(pe, eng.e, eng.l, model)
-            ee2, ll2 = path_cost_terms(pl, eng.e, eng.l, model)
-            e_sh.append(ee1 - ee2)
-            l_sh.append(ll1 - ll2)
-        dec[model]["w1_vs_w2"] = dict(changed=changed, total=tot,
-                                      d_energy=ci95(e_sh), d_latency=ci95(l_sh))
-    R["decoupled"] = dec
 
     # ---- E8: counterexample for Proposition 1 (rho below the efficiency spread)
     ce = {}
@@ -385,42 +359,6 @@ def main(out):
         ce[str(rho)] = dict(topologies_where_adaptation_changes_routing=n_diff, of=1 + len(rand30))
     R["prop1_counterexample"] = ce
 
-    # ---- E6: scalability of the candidate search
-    sc = []
-    for n in (20, 50, 100, 200):
-        for deg in (3.6, 6.0):
-            times, ncand, tyen = [], [], []
-            made, seed = 0, 50_000 + n * 10 + int(deg)
-            while made < 5:
-                seed += 1
-                gg = nx.erdos_renyi_graph(n, deg / (n - 1), seed=seed)
-                if not nx.is_connected(gg):
-                    continue
-                d = dict(nx.all_pairs_shortest_path_length(gg)) if n <= 100 else None
-                rng = np.random.default_rng(seed)
-                nodes = list(gg)
-                while True:
-                    a, b = rng.choice(nodes, 2, replace=False)
-                    if nx.shortest_path_length(gg, a, b) == 3:
-                        break
-                made += 1
-                eng = Engine(gg, int(a), int(b), -1, "hop")
-                rep = {}
-                t1 = time.perf_counter()
-                for _ in range(20):
-                    cands = S.candidates(gg, int(a), int(b))
-                    min(eng.ranked(cands, W_THR, rep))
-                times.append((time.perf_counter() - t1) / 20 * 1e3)
-                ncand.append(len(cands))
-                t1 = time.perf_counter()
-                for _ in range(20):
-                    from itertools import islice
-                    ks = list(islice(nx.shortest_simple_paths(gg, int(a), int(b)), 16))
-                    min(eng.ranked(ks, W_THR, rep))
-                tyen.append((time.perf_counter() - t1) / 20 * 1e3)
-            sc.append(dict(n=n, degree=deg, candidates=ci95(ncand), ms_enum=ci95(times),
-                           ms_yen16=ci95(tyen)))
-    R["scalability"] = sc
 
     R["meta"] = dict(tau_main=TAU_MAIN, runtime_s=time.time() - t0,
                      note="adv*: hit rates over threat-window steps; f=frequency, m=Markov, pa=policy-aware; 1=top-1, 3=top-3")
