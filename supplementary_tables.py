@@ -159,7 +159,8 @@ def _table10(data: dict) -> str:
 
 TABLE11_ROWS = [("fixed", "Fixed-Weight"), ("random", "Random"), ("mtd_M1", "Periodic MTD ($M=1$)"),
                 ("ntar", "NTAR"), ("ntar_r0.1", r"NTAR-R ($\tau=0.1$)"), ("pareto", "Pareto-random"),
-                ("tgmtd", "Threat-gated MTD"), ("qlearn", "Q-learning")]
+                ("tgmtd", "Threat-gated MTD"), ("qlearn", r"Q-learning ($\epsilon$-greedy)"),
+                ("qsoft", "Q-learning (Boltzmann)")]
 
 
 def _ci(v, precision: int = 3) -> str:
@@ -183,7 +184,8 @@ def _table11(data: dict) -> str:
         r"Markov and policy-aware hit rates are top-1 rates over the threat window. Route churn is the "
         r"fraction of steps on which the route changes; flow-rule updates are the switches per step whose "
         rf"next hop changes. Q-learning was trained for {int(meta['n_train'])} episodes per topology and "
-        rf"evaluated with $\epsilon={meta['eps_eval']}$.",
+        rf"evaluated with $\epsilon={meta['eps_eval']}$; the Boltzmann variant uses the same Q-table with a softmax "
+        rf"policy whose temperature ({data['qsoft']['temperature']:.3f}) was calibrated to NTAR-R's mean energy.",
         "tab:baselines", "lccccc",
         r"Method & Energy (J) & Markov top-1 & Policy-aware top-1 & Route churn & Flow-rule updates/step \\",
         rows,

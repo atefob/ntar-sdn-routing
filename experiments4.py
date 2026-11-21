@@ -12,6 +12,8 @@ seeds per topology, hop-cost model. Adds three baselines:
   tgmtd    Threat-gated MTD (adaptive MTD). Outside a reported threat it routes like
            Fixed-Weight (deterministic minimiser of the nominal cost); during a reported
            threat it switches to a uniformly random different path at every step.
+  qsoft    The same trained Q-table with a Boltzmann (softmax) policy whose temperature is
+           calibrated by bisection so that its mean energy matches NTAR-R on these topologies.
   qlearn   Tabular Q-learning. State = (reported threat flag, previous path); action =
            candidate path; reward = -C_norm(p) with the weight profile of the current
            threat state, i.e. the same objective NTAR minimises. The Q-table is trained
@@ -157,7 +159,7 @@ def train_q(eng, gs, seed):
 
 
 # ---------------------------------------------------------------- simulation
-def simulate(eng, gs, method, true_thr, down, seed=0, agent=None):
+def simulate(eng, gs, method, true_thr, down, seed=0, agent=None, temp=None):
     """Same adversary bookkeeping as experiments2.simulate (perfect threat signal)."""
     rng = np.random.default_rng(seed)
     rep = Counter()
@@ -224,6 +226,14 @@ def simulate(eng, gs, method, true_thr, down, seed=0, agent=None):
             p = agent.act(s, cands, EPS_EVAL, rng)
             # Bayes-optimal guess of an adversary that knows the Q-table and epsilon
             pa1 = (1 - EPS_EVAL) + EPS_EVAL / len(cands)
+        elif method == "qsoft":
+            # Boltzmann (softmax) policy over the learned Q-values
+            s = agent.key(thr, prev if prev in cands else None)
+            qv = np.array([agent.q[(s, a)] for a in cands])
+            z = np.exp((qv - qv.max()) / temp)
+            pr = z / z.sum()
+            p = cands[rng.choice(len(cands), p=pr)]
+            pa1 = float(pr.max())                         # adversary knows Q-table and temperature
         else:
             raise ValueError(method)
         ee, ll = E.path_cost_terms(p, eng.e, eng.l, eng.model)
@@ -277,15 +287,52 @@ def main(out):
     warnings.filterwarnings("ignore", message="Mean of empty slice")
     per = defaultdict(list)
     qtrain = []
+    agents = []
     for k, tp in enumerate(topos):
         eng = E.Engine(tp["g"], tp["src"], tp["dst"], tp["fail"], "hop", cost_seed=k)
         gs = GraphStates(eng)
         true_thr, down = E.schedule(T, ON, L)
         agent = train_q(eng, gs, seed=k)
+        agents.append((eng, gs, true_thr, down, agent))
         qtrain.append(len(agent.q))
         for m in METHODS:
             rows = [metrics(simulate(eng, gs, m, true_thr, down, seed=s, agent=agent)) for s in SEEDS]
             per[LABELS.get(m, m)].append({key: float(np.nanmean([r[key] for r in rows])) for key in rows[0]})
+    # share of Fixed-Weight route changes that are between paths of equal length
+    same = total = 0
+    for eng, gs, true_thr, down, agent in agents:
+        for s in SEEDS:
+            rec = simulate(eng, gs, "fixed", true_thr, down, seed=s)
+            for x, y in zip(rec, rec[1:]):
+                if x["path"] != y["path"]:
+                    total += 1
+                    same += int(len(x["path"]) == len(y["path"]))
+    fixed_equal_len = same / total
+    # Boltzmann Q-learning, temperature calibrated to NTAR-R's mean energy
+    target = float(np.mean([r["energy"] for r in per[f"ntar_r{TAU}"]]))
+
+    def soft_rows(temp):
+        out_rows = []
+        for eng, gs, true_thr, down, agent in agents:
+            rows = [metrics(simulate(eng, gs, "qsoft", true_thr, down, seed=s, agent=agent, temp=temp))
+                    for s in SEEDS]
+            out_rows.append({key: float(np.nanmean([r[key] for r in rows])) for key in rows[0]})
+        return out_rows
+
+    lo, hi = -4.0, 1.0                                      # log10 temperature bracket
+    for _ in range(30):
+        mid = 0.5 * (lo + hi)
+        e = float(np.mean([r["energy"] for r in soft_rows(10 ** mid)]))
+        if e < target:
+            lo = mid
+        else:
+            hi = mid
+    temp_star = 10 ** (0.5 * (lo + hi))
+    per["qsoft"] = soft_rows(temp_star)
+    temp_sweep = {}
+    for tt in (0.01, 0.03, 0.1, 0.3):
+        rr = soft_rows(tt)
+        temp_sweep[str(tt)] = {key: E.ci95([r[key] for r in rr]) for key in ("energy", "m1", "pa1")}
     # Q-learning sensitivity to the training length
     global N_TRAIN
     sens = {}
@@ -307,11 +354,15 @@ def main(out):
                      if not all(np.isnan(r[k]) for r in rows)} for lab, rows in per.items()}
     ref = f"ntar_r{TAU}"
     paired = {}
-    for other in ("pareto", "tgmtd", "qlearn", "fixed", "random", "mtd_M1"):
+    for other in ("pareto", "tgmtd", "qlearn", "qsoft", "fixed", "random", "mtd_M1"):
         for key in ("energy", "m1", "pa1", "churn"):
             d = [a[key] - b[key] for a, b in zip(per[ref], per[other])]
             paired[f"{other}:{key}"] = dict(mean_ci=E.ci95(d), p=E.wilcoxon_p(d))
-    R = dict(summary=summary, paired_vs_ntar_r=paired, qlearn_training_sensitivity=sens, per_topology=per,
+    R = dict(summary=summary, paired_vs_ntar_r=paired, qlearn_training_sensitivity=sens,
+             qsoft=dict(temperature=temp_star, energy_target=target, temperature_sweep=temp_sweep,
+                        calibration="bisection on log10 temperature, same 30 topologies"),
+             fixed_route_changes_between_equal_length_paths=fixed_equal_len,
+             per_topology=per,
              meta=dict(T=T, threat_on=ON, threat_len=L, seeds=list(SEEDS), tau=TAU,
                        n_train=N_TRAIN, alpha=ALPHA, gamma=GAMMA, eps_start=EPS_START,
                        eps_end=EPS_END, eps_eval=EPS_EVAL, q_states_actions_mean=float(np.mean(qtrain)),

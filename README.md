@@ -41,7 +41,7 @@ bash run_all.sh
 | `table8_timing.py` | Table 8: DFS, complete Yen and Yen-16 under the same four-hop bound (timing). |
 | `energy_matched_baseline.py` | Table 10: Gibbs baseline calibrated to NTAR-R's energy on 30 training topologies and tested on 30 held-out topologies. |
 | `ntar_state_tie_audit.py` | Lists the exact cost ties at each step of the representative run and checks the original and extended engines against each other. |
-| `experiments4.py` | Table 11: Pareto-random, threat-gated MTD and tabular Q-learning baselines on the 30 random topologies, plus route churn and flow-rule updates for every method. Checks at start-up that its simulator reproduces the path sequences of `experiments2.py`. |
+| `experiments4.py` | Table 11: Pareto-random, threat-gated MTD and tabular Q-learning (ε-greedy, and Boltzmann with temperature calibrated to NTAR-R's energy) baselines on the 30 random topologies, plus route churn and flow-rule updates for every method. Checks at start-up that its simulator reproduces the path sequences of `experiments2.py`. |
 | `make_tables.py` | Builds `results/tables.tex` from the JSON results, so no number is transcribed by hand. It calls `supplementary_tables.py` for Tables 7, 8, 10 and 11. |
 | `verify_manuscript_numbers.py` | Checks every number in Tables 7, 8 and 10 of the manuscript `.tex` against the JSON results. |
 | `make_figures.py` | Builds Figs. 2–4 from the JSON results. |
