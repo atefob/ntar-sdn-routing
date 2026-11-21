@@ -210,3 +210,27 @@ Energy-Matched Random & $0.170\pm0.002$ & $0.205\pm0.043$ & $0.255\pm0.043$ \\
 \end{tabular}%
 }
 \end{table*}
+
+% ---------------- TABLE 11 ----------------
+\begin{table*}[!t]
+\caption{Additional baselines on the 30 random topologies (40 steps, threat during steps 15--24, five routing seeds per topology; mean $\pm$ 95\% confidence half-width across topologies). Markov and policy-aware hit rates are top-1 rates over the threat window. Route churn is the fraction of steps on which the route changes; flow-rule updates are the switches per step whose next hop changes. Q-learning was trained for 4000 episodes per topology and evaluated with $\epsilon=0.05$.}
+\label{tab:baselines}
+\centering
+\scriptsize
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{lccccc}
+\toprule
+Method & Energy (J) & Markov top-1 & Policy-aware top-1 & Route churn & Flow-rule updates/step \\
+\midrule
+Fixed-Weight & $0.161\pm0.002$ & $0.663\pm0.119$ & $1.000\pm0.000$ & $0.82\pm0.12$ & $1.94\pm0.29$ \\
+Random & $0.187\pm0.002$ & $0.094\pm0.023$ & $0.107\pm0.019$ & $0.87\pm0.03$ & $2.34\pm0.16$ \\
+Periodic MTD ($M=1$) & $0.187\pm0.002$ & $0.107\pm0.024$ & $0.123\pm0.025$ & $0.99\pm0.01$ & $2.63\pm0.13$ \\
+NTAR & $0.166\pm0.001$ & $0.303\pm0.103$ & $1.000\pm0.000$ & $0.87\pm0.08$ & $2.09\pm0.21$ \\
+NTAR-R ($\tau=0.1$) & $0.171\pm0.002$ & $0.068\pm0.023$ & $0.245\pm0.021$ & $0.76\pm0.06$ & $1.94\pm0.20$ \\
+Pareto-random & $0.180\pm0.002$ & $0.111\pm0.038$ & $0.262\pm0.031$ & $0.93\pm0.03$ & $2.40\pm0.16$ \\
+Threat-gated MTD & $0.166\pm0.002$ & $0.127\pm0.029$ & $0.123\pm0.025$ & $0.87\pm0.08$ & $2.10\pm0.21$ \\
+Q-learning & $0.167\pm0.003$ & $0.313\pm0.041$ & $0.955\pm0.001$ & $0.87\pm0.08$ & $2.16\pm0.22$ \\
+\bottomrule
+\end{tabular}%
+}
+\end{table*}
