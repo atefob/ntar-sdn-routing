@@ -157,12 +157,46 @@ def _table10(data: dict) -> str:
     )
 
 
+TABLE11_ROWS = [("fixed", "Fixed-Weight"), ("random", "Random"), ("mtd_M1", "Periodic MTD ($M=1$)"),
+                ("ntar", "NTAR"), ("ntar_r0.1", r"NTAR-R ($\tau=0.1$)"), ("pareto", "Pareto-random"),
+                ("tgmtd", "Threat-gated MTD"), ("qlearn", "Q-learning")]
+
+
+def _ci(v, precision: int = 3) -> str:
+    return _pair({"mean": v[0], "ci95_half_width": v[1]}, precision)
+
+
+def _table11(data: dict) -> str:
+    s = data["summary"]
+    meta = data["meta"]
+    if (meta["T"], meta["threat_len"], len(meta["seeds"])) != (40, 10, 5):
+        raise ValueError("Table 11 design changed; update the caption")
+    rows = []
+    for key, name in TABLE11_ROWS:
+        v = s[key]
+        cells = [_ci(v["energy"]), _ci(v["m1"]), _ci(v["pa1"]), _ci(v["churn"], 2), _ci(v["flowmods"], 2)]
+        rows.append(f"{name} & " + " & ".join(cells) + r" \\")
+    return _latex_table(
+        11,
+        r"Additional baselines on the 30 random topologies (40 steps, threat during steps 15--24, "
+        r"five routing seeds per topology; mean $\pm$ 95\% confidence half-width across topologies). "
+        r"Markov and policy-aware hit rates are top-1 rates over the threat window. Route churn is the "
+        r"fraction of steps on which the route changes; flow-rule updates are the switches per step whose "
+        rf"next hop changes. Q-learning was trained for {int(meta['n_train'])} episodes per topology and "
+        rf"evaluated with $\epsilon={meta['eps_eval']}$.",
+        "tab:baselines", "lccccc",
+        r"Method & Energy (J) & Markov top-1 & Policy-aware top-1 & Route churn & Flow-rule updates/step \\",
+        rows,
+    )
+
+
 def add_supplementary_tables(results_dir: str | Path = "results") -> None:
-    """Insert Tables 7, 8 and 10 into a freshly generated tables.tex."""
+    """Insert Tables 7, 8, 10 and 11 into a freshly generated tables.tex."""
     root = Path(results_dir)
     t7 = _table7(_load(root / "table7_decoupled.json"))
     t8 = _table8(_load(root / "table8_timing.json"))
     t10 = _table10(_load(root / "energy_matched_baseline.json"))
+    t11 = _table11(_load(root / "results4.json"))
 
     output = root / "tables.tex"
     if not output.is_file():
@@ -183,16 +217,17 @@ def add_supplementary_tables(results_dir: str | Path = "results") -> None:
     blocks[7] = t7.rstrip()
     blocks[8] = t8.rstrip()
     blocks[10] = t10.rstrip()
+    blocks[11] = t11.rstrip()
     prefix = text[:starts[0].start()]
-    combined = prefix + "\n\n".join(blocks[i] for i in range(1, 11)) + "\n"
-    # Validate all 10 markers before atomic replacement.
+    combined = prefix + "\n\n".join(blocks[i] for i in range(1, 12)) + "\n"
+    # Validate all 11 markers before atomic replacement.
     found = [int(x) for x in MARKER.findall(combined)]
-    if found != list(range(1, 11)):
+    if found != list(range(1, 12)):
         raise AssertionError(f"Output table sequence invalid: {found}")
     temp = output.with_suffix(".tex.tmp")
     temp.write_text(combined, encoding="utf-8")
     temp.replace(output)
-    print("wrote results/tables.tex: Tables 1-10")
+    print("wrote results/tables.tex: Tables 1-11")
 
 
 if __name__ == "__main__":

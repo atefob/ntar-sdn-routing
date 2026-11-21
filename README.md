@@ -26,7 +26,8 @@ bash run_all.sh
 - `results/table8_timing.json`: hop-limit-matched candidate-generation timing (Table 8).
 - `results/energy_matched_baseline.json`: held-out energy-matched stochastic baseline (Table 10).
 - `results/ntar_state_tie_audit.json`: cost-tie audit of the representative run (Section 4.1).
-- `results/tables.tex`: all ten tables as LaTeX, generated from the JSON files.
+- `results/results4.json`: Pareto-random, threat-gated MTD and Q-learning baselines and route churn (Table 11).
+- `results/tables.tex`: all eleven tables as LaTeX, generated from the JSON files.
 - `figures/`: Figs. 2–4 as PDF and PNG. Fig. 1 (architecture) is drawn in TikZ: `figures/fig1_architecture.tex`.
 
 ## Repository layout
@@ -40,7 +41,8 @@ bash run_all.sh
 | `table8_timing.py` | Table 8: DFS, complete Yen and Yen-16 under the same four-hop bound (timing). |
 | `energy_matched_baseline.py` | Table 10: Gibbs baseline calibrated to NTAR-R's energy on 30 training topologies and tested on 30 held-out topologies. |
 | `ntar_state_tie_audit.py` | Lists the exact cost ties at each step of the representative run and checks the original and extended engines against each other. |
-| `make_tables.py` | Builds `results/tables.tex` from the JSON results, so no number is transcribed by hand. It calls `supplementary_tables.py` for Tables 7, 8 and 10. |
+| `experiments4.py` | Table 11: Pareto-random, threat-gated MTD and tabular Q-learning baselines on the 30 random topologies, plus route churn and flow-rule updates for every method. Checks at start-up that its simulator reproduces the path sequences of `experiments2.py`. |
+| `make_tables.py` | Builds `results/tables.tex` from the JSON results, so no number is transcribed by hand. It calls `supplementary_tables.py` for Tables 7, 8, 10 and 11. |
 | `verify_manuscript_numbers.py` | Checks every number in Tables 7, 8 and 10 of the manuscript `.tex` against the JSON results. |
 | `make_figures.py` | Builds Figs. 2–4 from the JSON results. |
 | `original/code_com_baseline.py` | The authors' original baseline script, kept for reference. |
@@ -71,6 +73,7 @@ python table7_decoupled.py                  # Table 7
 python table8_timing.py                  # Table 8 (timings depend on the machine)
 python energy_matched_baseline.py          # Table 10
 python ntar_state_tie_audit.py             # tie audit
+python experiments4.py --out results       # Table 11
 python make_tables.py                      # results/tables.tex
 python make_figures.py                     # figures/
 ```
